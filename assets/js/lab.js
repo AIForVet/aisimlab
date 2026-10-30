@@ -1,5 +1,5 @@
 // One simulation page: lab.html?sim=<id>&<options>
-import {lang, simLang, t, tr} from './i18n.js';
+import {lang, t, tr} from './i18n.js';
 import {esc, progress, renderChrome} from './common.js';
 import {findSim} from './catalog.js';
 
@@ -78,11 +78,14 @@ const onChange = (e) => {
     }
 };
 
+// The simulations' texts, generated from the filter_aisim language files by scripts/sync-aisim.sh.
+const simStrings = fetch(new URL(`../../vendor/aisim/strings/${lang}.json`, import.meta.url)).then((r) => r.json());
+
 const mount = async(options) => {
-    const module = await import(`../../vendor/aisim/sims/${sim.file}`);
+    const [module, strings] = await Promise.all([import(`../../vendor/aisim/sims/${sim.file}`), simStrings]);
     const box = document.getElementById('sim');
     box.innerHTML = '<div class="aisim-host"></div>';
-    instance = new module[sim.cls](box.firstChild, {...sim.options, ...options, lang: simLang, onChange});
+    instance = new module[sim.cls](box.firstChild, {...sim.options, ...options, strings, onChange});
 };
 
 if (!sim) {
@@ -96,7 +99,6 @@ if (!sim) {
         <h1>${sim.icon} ${esc(tr(sim.title))}</h1>
         <div class="lab-grid">
             <section class="sim-area">
-                ${simLang !== lang ? `<p class="note">${t('simInEnglish')}</p>` : ''}
                 <div id="sim"></div>
             </section>
             <aside class="side">

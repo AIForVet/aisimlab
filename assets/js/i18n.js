@@ -28,7 +28,6 @@ const STRINGS = {
         copied: 'Copied',
         embed: 'Embed in Moodle',
         embedHelp: 'Paste this into any Moodle text (in the HTML source view). Needs the filter_aisim plugin.',
-        simInEnglish: 'The controls inside the simulation are in English.',
         resetProgress: 'Reset progress',
         notFound: 'Simulation not found.',
         euFunded: 'Co-funded by the European Union',
@@ -93,7 +92,6 @@ const STRINGS = {
         copied: 'Skopírované',
         embed: 'Vložiť do Moodle',
         embedHelp: 'Vložte to do ľubovoľného textu v Moodle (v zobrazení HTML kódu). Vyžaduje doplnok filter_aisim.',
-        simInEnglish: 'Ovládacie prvky v simulácii sú v angličtine.',
         resetProgress: 'Vynulovať postup',
         notFound: 'Simulácia sa nenašla.',
         euFunded: 'Spolufinancované Európskou úniou',
@@ -126,7 +124,6 @@ const STRINGS = {
         copied: 'Copiado',
         embed: 'Incorporar no Moodle',
         embedHelp: 'Cole isto em qualquer texto do Moodle (na vista de código HTML). Requer o plugin filter_aisim.',
-        simInEnglish: 'Os controlos dentro da simulação estão em inglês.',
         resetProgress: 'Repor progresso',
         notFound: 'Simulação não encontrada.',
         euFunded: 'Cofinanciado pela União Europeia',
@@ -160,9 +157,6 @@ const pick = () => {
 
 export const lang = pick();
 document.documentElement.lang = lang;
-
-/** The simulation engines speak Serbian and English. */
-export const simLang = lang === 'sr' ? 'sr' : 'en';
 
 export const t = (key) => STRINGS[lang][key] ?? STRINGS.en[key] ?? key;
 
