@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Copy the simulation engines and their styles from filter_aisim (the single source) into vendor/aisim.
+#   bash scripts/sync-aisim.sh [path-to-moodle-filter_aisim]
+set -euo pipefail
+here="$(cd "$(dirname "$0")/.." && pwd)"
+src="${1:-$here/../moodle-filter_aisim}"
+dst="$here/vendor/aisim"
+rm -rf "$dst" && mkdir -p "$dst/sims"
+cp "$src"/amd/src/sims/*.js "$dst/sims/"
+cp "$src/styles.css" "$dst/styles.css"
+echo "filter_aisim $(git -C "$src" describe --tags --always 2>/dev/null || echo '?')" > "$dst/VERSION"
+echo "synced from $src ($(cat "$dst/VERSION"))"

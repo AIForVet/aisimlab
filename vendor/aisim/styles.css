@@ -1,0 +1,449 @@
+/* AI Simulation Container Styles */
+.aisim-container {
+    max-width: 980px;
+    margin: 1.5rem auto;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+}
+
+.aisim-header {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.aisim-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.aisim-badge {
+    background: #2563eb;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.aisim-select {
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+}
+.aisim-select:focus {
+    border-color: #3b82f6;
+}
+
+.aisim-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.aisim-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 1.25rem;
+}
+
+@media (max-width: 860px) {
+    .aisim-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.aisim-canvas-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    min-height: 280px;
+}
+
+.aisim-canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    padding: 4px 8px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.aisim-legend {
+    display: flex;
+    gap: 12px;
+    font-size: 0.8rem;
+    align-items: center;
+}
+.aisim-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.aisim-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.aisim-dot-neg {
+    background: #2563eb;
+}
+.aisim-dot-pos {
+    background: #ef4444;
+}
+.aisim-line-th {
+    width: 14px;
+    height: 2px;
+    background: #0f172a;
+    display: inline-block;
+}
+
+.aisim-canvas {
+    width: 100%;
+    height: 280px;
+    display: block;
+    cursor: crosshair;
+}
+
+.aisim-sidebar,
+.aisim-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.aisim-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.aisim-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.85rem;
+}
+
+.aisim-card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aisim-auc-badge {
+    background: #7c3aed;
+    color: #fff;
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.aisim-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed #e2e8f0;
+}
+.aisim-stat-row:last-child {
+    border-bottom: none;
+}
+.aisim-stat-val {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 700;
+    color: #0284c7;
+}
+
+.aisim-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.aisim-btn {
+    appearance: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease-in-out;
+}
+
+.aisim-btn-primary {
+    background: #2563eb;
+    color: #fff;
+}
+.aisim-btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.aisim-btn-secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+.aisim-btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+.aisim-btn-danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+.aisim-btn-danger:hover {
+    background: #fecaca;
+}
+
+.aisim-slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 0.6rem;
+}
+.aisim-slider-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    display: flex;
+    justify-content: space-between;
+}
+.aisim-slider {
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Prominent Threshold Slider Card */
+.aisim-slider-card {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.aisim-th-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.92rem;
+    color: #0f172a;
+}
+.aisim-th-pill {
+    background: #0f172a;
+    color: #fff;
+    padding: 2px 9px;
+    border-radius: 12px;
+    font-family: monospace;
+    font-weight: 700;
+    margin-left: 6px;
+}
+.aisim-th-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+.aisim-slider-large {
+    height: 6px;
+    border-radius: 3px;
+    accent-color: #0f172a;
+}
+
+/* 2x2 Confusion Matrix Grid */
+.aisim-matrix-grid {
+    display: grid;
+    grid-template-columns: 85px 1fr 1fr;
+    gap: 6px;
+    font-size: 0.82rem;
+    text-align: center;
+}
+.aisim-matrix-corner {
+    background: transparent;
+}
+.aisim-matrix-head {
+    font-weight: 700;
+    color: #475569;
+    padding: 4px;
+}
+.aisim-matrix-rowhead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    text-align: right;
+    padding-right: 4px;
+}
+.aisim-cell {
+    border-radius: 6px;
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+}
+.aisim-cell-lbl {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.aisim-cell-val {
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: monospace;
+    margin-top: 2px;
+}
+
+.aisim-cell-tp {
+    background: #dcfce7;
+    color: #15803d;
+    border-color: #86efac;
+}
+.aisim-cell-tn {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-color: #7dd3fc;
+}
+.aisim-cell-fn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #fca5a5;
+}
+.aisim-cell-fp {
+    background: #ffedd5;
+    color: #c2410c;
+    border-color: #fdba74;
+}
+
+/* Metric Progress Rows */
+.aisim-metric-row {
+    margin-bottom: 0.6rem;
+}
+.aisim-metric-row:last-child {
+    margin-bottom: 0;
+}
+.aisim-metric-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 3px;
+}
+.aisim-prog-bar {
+    width: 100%;
+    height: 7px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.aisim-prog-fill {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 4px;
+    transition: width 0.15s ease-in-out;
+}
+.aisim-fill-prec {
+    background: #0284c7;
+}
+.aisim-fill-rec {
+    background: #16a34a;
+}
+.aisim-fill-f1 {
+    background: #7c3aed;
+}
+
+/* Advice / Pedagogical Card */
+.aisim-advice-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+.aisim-advice-icon {
+    font-size: 1.4rem;
+}
+.aisim-advice-text {
+    font-size: 0.88rem;
+    color: #1e40af;
+    line-height: 1.4;
+}
+
+/* Status Bar */
+.aisim-status-bar {
+    background: #f1f5f9;
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid #3b82f6;
+}
+.aisim-status-bar.converged {
+    background: #f0fdf4;
+    border-left-color: #22c55e;
+    color: #15803d;
+}
+.aisim-status-bar.diverging {
+    background: #fef2f2;
+    border-left-color: #ef4444;
+    color: #b91c1c;
+}
+
+.aisim-mini-chart {
+    width: 100%;
+    height: 130px;
+    display: block;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+}
