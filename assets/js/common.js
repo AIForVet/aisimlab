@@ -8,7 +8,7 @@ export const LINKS = {
     project: 'https://aiforvet.eu/',
     guideSr: 'https://github.com/blagojevicboban/moodle-filter_aisim/blob/master/docs/PRIRUCNIK_ZA_NASTAVNIKE.md',
     guideEn: 'https://github.com/blagojevicboban/moodle-filter_aisim/blob/master/docs/TEACHER_GUIDE.md',
-    source: 'https://github.com/blagojevicboban/aisimlab',
+    source: 'https://github.com/AIForVet/aisimlab',
 };
 
 export const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
