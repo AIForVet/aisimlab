@@ -371,6 +371,82 @@ export const SIMS = [
             },
         ],
     },
+    {
+        id: 'neural-network',
+        file: 'neural_network.js',
+        cls: 'NeuralNetworkSim',
+        icon: '🧠',
+        level: 3,
+        title: {
+            en: 'Perceptron & Neural Network',
+            sr: 'Perceptron i neuronska mreža',
+            sk: 'Perceptrón a neurónová sieť',
+            pt: 'Perceptrão e rede neuronal',
+        },
+        summary: {
+            en: 'Why one neuron can only draw a straight line, and how a hidden layer learns XOR and circles.',
+            sr: 'Zašto jedan neuron može da povuče samo pravu liniju i kako skriveni sloj nauči XOR i krugove.',
+            sk: 'Prečo jeden neurón dokáže nakresliť len priamku a ako sa skrytá vrstva naučí XOR a kruhy.',
+            pt: 'Porque é que um neurónio só traça uma linha reta e como uma camada oculta aprende o XOR e círculos.',
+        },
+        about: {
+            en: [
+                'A perceptron adds up its weighted inputs and decides by the sign: its decision boundary is always a straight line. It learns data that a line can separate, but never XOR.',
+                'A hidden layer combines several such lines. With a non-linear activation (tanh, sigmoid, ReLU) the network can bend the boundary around any shape – the more neurons, the more complex the shape.',
+                'Training is gradient descent on the loss: every epoch moves all the weights a little. The line widths in the network drawing show how strong each weight has become.',
+            ],
+            sr: [
+                'Perceptron sabira otežane ulaze i odlučuje po znaku: njegova granica odlučivanja je uvek prava linija. Nauči podatke koje prava razdvaja, ali XOR nikada.',
+                'Skriveni sloj kombinuje više takvih linija. Uz nelinearnu aktivaciju (tanh, sigmoid, ReLU) mreža može da savije granicu oko bilo kog oblika – što više neurona, to složeniji oblik.',
+                'Trening je gradijentni spust po gubitku: svaka epoha malo pomeri sve težine. Debljina linija na crtežu mreže pokazuje koliko je koja težina postala jaka.',
+            ],
+            sk: [
+                'Perceptrón sčíta vážené vstupy a rozhodne podľa znamienka: jeho rozhodovacia hranica je vždy priamka. Naučí sa dáta, ktoré priamka oddelí, ale XOR nikdy.',
+                'Skrytá vrstva kombinuje viac takých priamok. S nelineárnou aktiváciou (tanh, sigmoid, ReLU) môže sieť ohnúť hranicu okolo akéhokoľvek tvaru – čím viac neurónov, tým zložitejší tvar.',
+                'Trénovanie je gradientný zostup po chybe: každá epocha trochu posunie všetky váhy. Hrúbka čiar na nákrese siete ukazuje, aká silná je každá váha.',
+            ],
+            pt: [
+                'Um perceptrão soma as entradas ponderadas e decide pelo sinal: a sua fronteira de decisão é sempre uma linha reta. Aprende dados que uma reta separa, mas nunca o XOR.',
+                'Uma camada oculta combina várias dessas retas. Com uma ativação não linear (tanh, sigmoide, ReLU) a rede consegue curvar a fronteira à volta de qualquer forma – quantos mais neurónios, mais complexa a forma.',
+                'O treino é a descida do gradiente sobre a perda: cada época move um pouco todos os pesos. A espessura das linhas no desenho da rede mostra a força de cada peso.',
+            ],
+        },
+        options: {dataset: 'xor', layers: 0, neurons: 4, activation: 'tanh', lr: 0.3, seed: 1, epochs: 0},
+        state: (s) => ({dataset: s.datasetKey, layers: s.layers, neurons: s.neurons, activation: s.activation, lr: s.lr,
+            seed: s.seed, epochs: s.epoch}),
+        challenges: [
+            {
+                setup: {dataset: 'linear', layers: 0, neurons: 4, activation: 'tanh', lr: 0.3, seed: 1},
+                text: {
+                    en: 'Linearly separable data: train a perceptron (0 hidden layers) to accuracy ≥ 99%.',
+                    sr: 'Linearno razdvojivi podaci: istrenirajte perceptron (0 skrivenih slojeva) do tačnosti ≥ 99%.',
+                    sk: 'Lineárne oddeliteľné dáta: natrénujte perceptrón (0 skrytých vrstiev) na presnosť ≥ 99 %.',
+                    pt: 'Dados linearmente separáveis: treine um perceptrão (0 camadas ocultas) até exatidão ≥ 99%.',
+                },
+                check: (p, m) => p.layers === 0 && m.accuracy >= 0.99,
+            },
+            {
+                setup: {dataset: 'xor', layers: 0, neurons: 4, activation: 'tanh', lr: 0.3, seed: 1},
+                text: {
+                    en: 'XOR: a perceptron stays at 50%. Add a hidden layer and reach accuracy ≥ 98% with at most 4 hidden neurons.',
+                    sr: 'XOR: perceptron ostaje na 50%. Dodajte skriveni sloj i dostignite tačnost ≥ 98% sa najviše 4 skrivena neurona.',
+                    sk: 'XOR: perceptrón zostane na 50 %. Pridajte skrytú vrstvu a dosiahnite presnosť ≥ 98 % s najviac 4 skrytými neurónmi.',
+                    pt: 'XOR: um perceptrão fica nos 50%. Adicione uma camada oculta e atinja exatidão ≥ 98% com no máximo 4 neurónios ocultos.',
+                },
+                check: (p, m) => p.hidden > 0 && p.hidden <= 4 && m.accuracy >= 0.98,
+            },
+            {
+                setup: {dataset: 'circles', layers: 1, neurons: 2, activation: 'tanh', lr: 0.3, seed: 1},
+                text: {
+                    en: 'Circle in a circle: reach accuracy ≥ 98% with at most 4 hidden neurons (if training stalls, try new weights).',
+                    sr: 'Krug u krugu: dostignite tačnost ≥ 98% sa najviše 4 skrivena neurona (ako učenje zastane, probajte nove težine).',
+                    sk: 'Kruh v kruhu: dosiahnite presnosť ≥ 98 % s najviac 4 skrytými neurónmi (ak sa učenie zastaví, skúste nové váhy).',
+                    pt: 'Círculo dentro de círculo: atinja exatidão ≥ 98% com no máximo 4 neurónios ocultos (se o treino parar, experimente novos pesos).',
+                },
+                check: (p, m) => p.hidden > 0 && p.hidden <= 4 && m.accuracy >= 0.98,
+            },
+        ],
+    },
 ];
 
 export const findSim = (id) => SIMS.find((s) => s.id === id);
