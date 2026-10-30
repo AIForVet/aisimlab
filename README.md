@@ -35,11 +35,20 @@ Any static server, for example `python -m http.server 8000` in this folder, then
 
 ## Deploy (Virtualmin)
 
-Copy these into the `public_html` of `sim.aiforvet.eu`: `index.html`, `lab.html`, `assets/`, `vendor/`, `LICENSE`.
+The site is a git checkout in the `public_html` of `sim.aiforvet.eu`. `.htaccess` hides `.git` and `scripts/` and
+redirects to HTTPS.
+
+First time (`public_html` still has the Virtualmin welcome page):
 
 ```bash
-rsync -av --delete index.html lab.html LICENSE assets vendor USER@SERVER:/home/USER/public_html/
+cd ~/public_html
+git init -b main
+git remote add origin https://github.com/AIForVet/aisimlab.git
+git fetch origin
+git reset --hard origin/main
 ```
+
+Update: `cd ~/public_html && git pull`
 
 ## License
 
