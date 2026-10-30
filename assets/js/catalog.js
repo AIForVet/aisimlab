@@ -598,6 +598,81 @@ export const SIMS = [
             },
         ],
     },
+    {
+        id: 'data-bias',
+        file: 'data_bias.js',
+        cls: 'DataBiasSim',
+        icon: '⚖️',
+        level: 2,
+        title: {
+            en: 'Data Split & Bias',
+            sr: 'Podela podataka i pristrasnost',
+            sk: 'Rozdelenie dát a skreslenie',
+            pt: 'Divisão de dados e enviesamento',
+        },
+        summary: {
+            en: 'Why a model needs a separate test set – and why even a good test score can hide a model that fails for a group missing from the data.',
+            sr: 'Zašto modelu treba poseban test skup – i zašto i dobar rezultat na testu može da sakrije model koji ne radi za grupu koje nema u podacima.',
+            sk: 'Prečo model potrebuje samostatnú testovaciu množinu – a prečo aj dobré skóre na teste môže skryť model, ktorý zlyháva pre skupinu chýbajúcu v dátach.',
+            pt: 'Porque é que um modelo precisa de um conjunto de teste separado – e porque é que até um bom resultado no teste pode esconder um modelo que falha para um grupo ausente dos dados.',
+        },
+        about: {
+            en: [
+                'A model is trained on one part of the data and measured on another part it has never seen (the test set). Accuracy on the training data says little: with k = 1 the model simply memorises every point and scores 100%.',
+                'But the test set comes from the same sample. If the sample contains almost no parts from factory B, the test set does not either – the test score looks excellent while the model fails for factory B in the real world.',
+                'This is how biased data turns into an unfair model, whether it judges machine parts, loan applications or medical images. The cure is representative data and measuring each group separately.',
+            ],
+            sr: [
+                'Model se trenira na jednom delu podataka, a meri na drugom delu koji nikad nije video (test skup). Tačnost na podacima za trening malo govori: sa k = 1 model samo zapamti svaku tačku i ima 100%.',
+                'Ali test skup potiče iz istog uzorka. Ako uzorak skoro da nema delova iz fabrike B, nema ih ni test skup – rezultat na testu izgleda odlično, a model u stvarnom svetu ne radi za fabriku B.',
+                'Tako pristrasni podaci postaju nepravedan model, bilo da ocenjuje mašinske delove, zahteve za kredit ili medicinske snimke. Lek su reprezentativni podaci i merenje svake grupe posebno.',
+            ],
+            sk: [
+                'Model sa trénuje na jednej časti dát a meria na inej časti, ktorú nikdy nevidel (testovacia množina). Presnosť na trénovacích dátach veľa nehovorí: pri k = 1 si model len zapamätá každý bod a má 100 %.',
+                'Testovacia množina však pochádza z tej istej vzorky. Ak vzorka takmer neobsahuje diely z továrne B, neobsahuje ich ani test – skóre na teste vyzerá výborne, no model v skutočnom svete pre továreň B zlyháva.',
+                'Takto sa zo skreslených dát stáva nespravodlivý model, či posudzuje strojové diely, žiadosti o úver alebo medicínske snímky. Liekom sú reprezentatívne dáta a meranie každej skupiny zvlášť.',
+            ],
+            pt: [
+                'Um modelo é treinado com uma parte dos dados e avaliado noutra parte que nunca viu (o conjunto de teste). A exatidão nos dados de treino diz pouco: com k = 1 o modelo memoriza cada ponto e obtém 100%.',
+                'Mas o conjunto de teste vem da mesma amostra. Se a amostra quase não tem peças da fábrica B, o teste também não – o resultado do teste parece excelente, enquanto no mundo real o modelo falha para a fábrica B.',
+                'É assim que dados enviesados se tornam um modelo injusto, quer avalie peças, pedidos de crédito ou imagens médicas. A solução são dados representativos e medir cada grupo separadamente.',
+            ],
+        },
+        options: {population: 'shifted', n: 200, share: 5, test: 25, k: 5, seed: 1},
+        state: (s) => ({population: s.population, n: s.n, share: s.share, test: s.testPct, k: s.k, seed: s.seed}),
+        challenges: [
+            {
+                setup: {population: 'shifted', n: 200, share: 5, test: 25, k: 5, seed: 1},
+                text: {
+                    en: 'The test set says about 95%, yet factory B is far lower. Change the data so that the real-world accuracy for factory B reaches at least 88%.',
+                    sr: 'Test skup kaže oko 95%, a fabrika B je mnogo niže. Promenite podatke tako da stvarna tačnost za fabriku B dostigne bar 88%.',
+                    sk: 'Testovacia množina ukazuje asi 95 %, no továreň B je oveľa nižšie. Zmeňte dáta tak, aby skutočná presnosť pre továreň B dosiahla aspoň 88 %.',
+                    pt: 'O conjunto de teste indica cerca de 95%, mas a fábrica B fica muito abaixo. Altere os dados para que a exatidão real na fábrica B chegue a pelo menos 88%.',
+                },
+                check: (p, m) => p.population === 'shifted' && m.accB >= 0.88,
+            },
+            {
+                setup: {population: 'shifted', n: 400, share: 5, test: 25, k: 5, seed: 1},
+                text: {
+                    en: 'Collecting data is expensive: with at most 120 samples, get both factories to a real-world accuracy of at least 88%.',
+                    sr: 'Prikupljanje podataka je skupo: sa najviše 120 uzoraka dovedite obe fabrike do stvarne tačnosti od bar 88%.',
+                    sk: 'Zber dát je drahý: s najviac 120 vzorkami dosiahnite v oboch továrňach skutočnú presnosť aspoň 88 %.',
+                    pt: 'Recolher dados é caro: com no máximo 120 amostras, leve as duas fábricas a uma exatidão real de pelo menos 88%.',
+                },
+                check: (p, m) => p.population === 'shifted' && p.n <= 120 && m.worst >= 0.88,
+            },
+            {
+                setup: {population: 'shifted', n: 200, share: 40, test: 25, k: 1, seed: 1},
+                text: {
+                    en: 'With k = 1 the training accuracy is 100% – memorisation. Choose k > 1 so that both factories reach at least 90% with a gap of at most 5%.',
+                    sr: 'Sa k = 1 tačnost na treningu je 100% – pamćenje. Izaberite k > 1 tako da obe fabrike dostignu bar 90%, uz razliku od najviše 5%.',
+                    sk: 'Pri k = 1 je presnosť na tréningu 100 % – memorovanie. Zvoľte k > 1 tak, aby obe továrne dosiahli aspoň 90 % s rozdielom najviac 5 %.',
+                    pt: 'Com k = 1 a exatidão no treino é 100% – memorização. Escolha k > 1 para que as duas fábricas atinjam pelo menos 90% com uma diferença de no máximo 5%.',
+                },
+                check: (p, m) => p.k > 1 && m.worst >= 0.9 && m.gap <= 0.05,
+            },
+        ],
+    },
 ];
 
 export const findSim = (id) => SIMS.find((s) => s.id === id);
