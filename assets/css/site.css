@@ -223,7 +223,7 @@ a { color: var(--brand); }
     .goal-bar.done .badge { background: var(--ok); }
     .goal-bar b { display: block; font-size: .75rem; color: var(--brand-dark); text-transform: uppercase; letter-spacing: .04em; }
     .goal-bar .count { font-weight: 700; color: var(--muted); }
-    .toast { bottom: calc(6.5rem + env(safe-area-inset-bottom)); }
+    .toast { bottom: calc(6.5rem + env(safe-area-inset-bottom)); max-width: calc(100% - 2rem); padding: .55rem 1rem; font-size: .9rem; white-space: nowrap; }
     .btn { min-height: 2.75rem; }
     .btn.small { min-height: 2.5rem; padding: .3rem .8rem; }
 }
