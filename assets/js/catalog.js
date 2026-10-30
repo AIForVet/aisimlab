@@ -523,6 +523,81 @@ export const SIMS = [
             },
         ],
     },
+    {
+        id: 'q-learning',
+        file: 'q_learning.js',
+        cls: 'QLearningSim',
+        icon: '🤖',
+        level: 3,
+        title: {
+            en: 'Reinforcement Learning (Q-learning)',
+            sr: 'Učenje potkrepljivanjem (Q-learning)',
+            sk: 'Posilňovanie učením (Q-learning)',
+            pt: 'Aprendizagem por reforço (Q-learning)',
+        },
+        summary: {
+            en: 'An agent learns from rewards alone: exploration vs exploitation, and why the discount factor decides between a small reward now and a big one later.',
+            sr: 'Agent uči samo iz nagrada: istraživanje naspram iskorišćavanja i zašto faktor umanjenja bira između male nagrade sada i velike kasnije.',
+            sk: 'Agent sa učí len z odmien: skúmanie verzus využívanie a prečo diskontný faktor rozhoduje medzi malou odmenou teraz a veľkou neskôr.',
+            pt: 'Um agente aprende só com recompensas: exploração versus aproveitamento, e porque o fator de desconto decide entre uma recompensa pequena agora e uma grande depois.',
+        },
+        about: {
+            en: [
+                'Nobody shows the agent the way. It moves, gets a reward (−0.1 per step, +10 at the goal, −10 off the cliff) and stores in a Q-table how good every move is in every cell.',
+                'Q(s,a) ← Q(s,a) + α · (r + γ · max Q(s′,·) − Q(s,a)). The learning rate α sets how fast new experience overwrites the old, the discount factor γ how much future rewards count.',
+                'With probability ε the agent makes a random move. Without exploration it keeps repeating what it already knows and may never find a better reward – the exploration–exploitation dilemma, behind game AIs and robot control alike.',
+            ],
+            sr: [
+                'Agentu niko ne pokazuje put. On se pomera, dobija nagradu (−0.1 po koraku, +10 na cilju, −10 kad padne sa litice) i u Q-tabeli pamti koliko je dobar svaki potez u svakom polju.',
+                'Q(s,a) ← Q(s,a) + α · (r + γ · max Q(s′,·) − Q(s,a)). Stopa učenja α određuje koliko brzo novo iskustvo menja staro, a faktor umanjenja γ koliko vrede buduće nagrade.',
+                'Sa verovatnoćom ε agent pravi nasumičan potez. Bez istraživanja ponavlja ono što već zna i možda nikad ne nađe bolju nagradu – dilema istraživanja i iskorišćavanja, na kojoj počivaju i AI za igre i upravljanje robotima.',
+            ],
+            sk: [
+                'Agentovi nikto neukáže cestu. Pohybuje sa, dostáva odmenu (−0,1 za krok, +10 v cieli, −10 pri páde z útesu) a v Q-tabuľke si pamätá, aký dobrý je každý ťah v každom poli.',
+                'Q(s,a) ← Q(s,a) + α · (r + γ · max Q(s′,·) − Q(s,a)). Rýchlosť učenia α určuje, ako rýchlo nová skúsenosť prepíše starú, diskontný faktor γ, koľko platia budúce odmeny.',
+                'S pravdepodobnosťou ε urobí agent náhodný ťah. Bez skúmania opakuje to, čo už pozná, a možno nikdy nenájde lepšiu odmenu – dilema skúmania a využívania, na ktorej stoja herné AI aj riadenie robotov.',
+            ],
+            pt: [
+                'Ninguém mostra o caminho ao agente. Ele move-se, recebe uma recompensa (−0,1 por passo, +10 no objetivo, −10 se cair da falésia) e guarda numa tabela Q quão bom é cada movimento em cada casa.',
+                'Q(s,a) ← Q(s,a) + α · (r + γ · max Q(s′,·) − Q(s,a)). A taxa de aprendizagem α define a rapidez com que a nova experiência substitui a antiga, o fator de desconto γ quanto valem as recompensas futuras.',
+                'Com probabilidade ε o agente faz um movimento aleatório. Sem exploração repete o que já conhece e pode nunca encontrar uma recompensa melhor – o dilema exploração–aproveitamento, presente tanto na IA de jogos como no controlo de robôs.',
+            ],
+        },
+        options: {map: 'maze', alpha: 0.5, gamma: 0.9, epsilon: 0.2, seed: 1, episodes: 0},
+        state: (s) => ({map: s.mapKey, alpha: s.alpha, gamma: s.gamma, epsilon: s.epsilon, seed: s.seed, episodes: s.episode}),
+        challenges: [
+            {
+                setup: {map: 'maze', alpha: 0.5, gamma: 0.9, epsilon: 0.2, seed: 1},
+                text: {
+                    en: 'Maze: train the agent until its policy takes the shortest path (10 steps), in at most 200 episodes.',
+                    sr: 'Lavirint: trenirajte agenta dok njegova politika ne bude išla najkraćim putem (10 koraka), za najviše 200 epizoda.',
+                    sk: 'Bludisko: trénujte agenta, kým jeho stratégia nepôjde najkratšou cestou (10 krokov), najviac za 200 epizód.',
+                    pt: 'Labirinto: treine o agente até a sua política seguir o caminho mais curto (10 passos), em no máximo 200 episódios.',
+                },
+                check: (p, m) => p.map === 'maze' && m.reached && m.steps <= 10 && p.episodes <= 200,
+            },
+            {
+                setup: {map: 'cliff', alpha: 0.5, gamma: 0.9, epsilon: 0.2, seed: 1},
+                text: {
+                    en: 'Cliff: the shortest path runs right along the edge. Get a policy that walks it (11 steps) within 500 episodes – then compare the average reward with ε = 0.05 and ε = 0.4.',
+                    sr: 'Litica: najkraći put vodi tik uz ivicu. Dobijte politiku koja ide njime (11 koraka) za najviše 500 epizoda – zatim uporedite prosečnu nagradu uz ε = 0.05 i ε = 0.4.',
+                    sk: 'Útes: najkratšia cesta vedie tesne popri okraji. Získajte stratégiu, ktorá ňou ide (11 krokov), najviac za 500 epizód – potom porovnajte priemernú odmenu pri ε = 0,05 a ε = 0,4.',
+                    pt: 'Falésia: o caminho mais curto passa junto à borda. Obtenha uma política que o siga (11 passos) em no máximo 500 episódios – depois compare a recompensa média com ε = 0,05 e ε = 0,4.',
+                },
+                check: (p, m) => p.map === 'cliff' && m.reached && m.steps <= 11 && p.episodes <= 500,
+            },
+            {
+                setup: {map: 'treasure', alpha: 0.5, gamma: 0.5, epsilon: 0.1, seed: 1},
+                text: {
+                    en: 'Near or far: the agent grabs the small treasure (+3). Change γ and ε so that it learns to go for the big goal G (+10) in 4 steps.',
+                    sr: 'Blizu ili daleko: agent uzima malo blago (+3). Promenite γ i ε tako da nauči da ide do velikog cilja G (+10) u 4 koraka.',
+                    sk: 'Blízko alebo ďaleko: agent berie malý poklad (+3). Zmeňte γ a ε tak, aby sa naučil ísť k veľkému cieľu G (+10) za 4 kroky.',
+                    pt: 'Perto ou longe: o agente apanha o tesouro pequeno (+3). Altere γ e ε para que aprenda a ir até ao objetivo grande G (+10) em 4 passos.',
+                },
+                check: (p, m) => p.map === 'treasure' && m.reached && m.steps <= 4,
+            },
+        ],
+    },
 ];
 
 export const findSim = (id) => SIMS.find((s) => s.id === id);
