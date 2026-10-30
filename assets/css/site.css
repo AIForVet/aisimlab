@@ -54,7 +54,20 @@ a { color: var(--brand); }
     font-size: .85rem;
 }
 .lang { display: flex; gap: .25rem; }
-.lang a { padding: .3rem .7rem; border-radius: 999px; text-decoration: none; color: var(--muted); font-size: .9rem; }
+.lang a {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0 .5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: .85rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .lang a.active { background: #eef2ff; color: var(--brand-dark); font-weight: 600; }
 
 /* Home */
@@ -160,9 +173,16 @@ a { color: var(--brand); }
     background: var(--ink);
     color: #fff;
     font-weight: 600;
-    transition: transform .25s;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform .25s, opacity .25s, visibility .25s;
 }
-.toast.show { transform: translate(-50%, 0); }
+.toast.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+.note { margin: 0 0 .6rem; padding: .5rem .8rem; border-radius: 10px; background: #fef9c3; color: #713f12; font-size: .85rem; }
+#sim, #challenges-panel { scroll-margin-top: 4.5rem; }
+
+/* Phone: the active challenge as a bar at the bottom of the screen. */
+.goal-bar { display: none; }
 .empty { padding: 3rem 0; text-align: center; }
 
 /* Footer */
@@ -174,6 +194,56 @@ a { color: var(--brand); }
 
 @media (max-width: 900px) {
     .lab-grid { grid-template-columns: 1fr; }
+    #lab { padding-bottom: 6rem; }
+    #lab h1 { font-size: 1.35rem; }
+    .goal-bar {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: .6rem;
+        align-items: center;
+        position: fixed;
+        left: .5rem;
+        right: .5rem;
+        bottom: calc(.5rem + env(safe-area-inset-bottom));
+        z-index: 20;
+        padding: .6rem .8rem;
+        border: 1px solid #c7d2fe;
+        border-radius: var(--radius);
+        background: rgba(245, 247, 255, .97);
+        box-shadow: 0 6px 24px rgba(15, 23, 42, .18);
+        color: var(--ink);
+        font: inherit;
+        font-size: .85rem;
+        line-height: 1.35;
+        text-align: left;
+        cursor: pointer;
+    }
+    .goal-bar .badge {
+        display: grid;
+        place-items: center;
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 50%;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 700;
+    }
+    .goal-bar.done { border-color: #86efac; background: rgba(240, 253, 244, .97); }
+    .goal-bar.done .badge { background: var(--ok); }
+    .goal-bar b { display: block; font-size: .75rem; color: var(--brand-dark); text-transform: uppercase; letter-spacing: .04em; }
+    .goal-bar .count { font-weight: 700; color: var(--muted); }
+    .toast { bottom: calc(6.5rem + env(safe-area-inset-bottom)); }
+    .btn { min-height: 2.75rem; }
+    .btn.small { min-height: 2.5rem; padding: .3rem .8rem; }
+}
+@media (max-width: 480px) {
+    .wrap { padding: 1rem .75rem 2.5rem; }
+    .site-header { padding: .5rem .75rem; }
+    .brand { font-size: 1.05rem; }
+    .lang { gap: 0; }
+    .lang a { min-width: 2.5rem; padding: 0 .3rem; }
+    .hero { padding-top: 1rem; }
+    .card { padding: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) {
     .card, .toast { transition: none; }

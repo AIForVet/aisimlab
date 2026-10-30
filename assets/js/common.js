@@ -22,7 +22,8 @@ const langUrl = (code) => {
 
 export const renderChrome = () => {
     const switcher = Object.entries(LANGS).map(([code, name]) =>
-        `<a href="${esc(langUrl(code))}" class="${code === lang ? 'active' : ''}" hreflang="${code}">${name}</a>`).join('');
+        `<a href="${esc(langUrl(code))}" class="${code === lang ? 'active' : ''}" hreflang="${code}" lang="${code}" title="${name}"
+            ${code === lang ? 'aria-current="true"' : ''}><span aria-hidden="true">${code.toUpperCase()}</span><span class="sr-only">${name}</span></a>`).join('');
     document.getElementById('site-header').innerHTML = `
         <a class="brand" href="./"><span class="brand-mark">AI</span><span>AISim <b>Lab</b></span></a>
         <nav class="lang" aria-label="Language">${switcher}</nav>`;

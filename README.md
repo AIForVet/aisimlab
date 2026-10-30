@@ -12,7 +12,7 @@ A static site: plain HTML, CSS and JavaScript modules. No build step, no server 
 | `index.html` | Home page with the five simulations |
 | `lab.html?sim=<id>` | One simulation with challenges, explanation, share link and Moodle embed code |
 | `assets/js/catalog.js` | Simulations, URL options, explanations and challenges |
-| `assets/js/i18n.js` | Interface strings (Serbian, English) |
+| `assets/js/i18n.js` | Interface strings (Serbian, English, Slovak, Portuguese) |
 | `vendor/aisim/` | Simulation engines, copied from [filter_aisim](https://github.com/blagojevicboban/moodle-filter_aisim) – do not edit here |
 
 The simulations have one source: `filter_aisim/amd/src/sims`. After changing them there, run:
@@ -24,7 +24,7 @@ bash scripts/sync-aisim.sh            # expects ../moodle-filter_aisim
 ## Links
 
 - `lab.html?sim=gradient-descent&profile=convex&lr=0.15&w0=-0.5` – open a simulation with given settings
-- `?lang=sr` / `?lang=en` – choose the language (remembered in the browser)
+- `?lang=sr`, `en`, `sk`, `pt` – choose the language (remembered in the browser). The controls inside the simulations are in Serbian or English; Slovak and Portuguese pages show the English simulation.
 
 Simulation ids: `gradient-descent`, `confusion-matrix`, `regression`, `knn-tree`, `kmeans`.
 

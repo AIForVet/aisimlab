@@ -1,5 +1,5 @@
 // One simulation page: lab.html?sim=<id>&<options>
-import {lang, t, tr} from './i18n.js';
+import {lang, simLang, t, tr} from './i18n.js';
 import {esc, progress, renderChrome} from './common.js';
 import {findSim} from './catalog.js';
 
@@ -44,7 +44,21 @@ const toast = (msg) => {
     el.timer = setTimeout(() => el.classList.remove('show'), 2500);
 };
 
+/** Phone: the active challenge stays in view at the bottom while the student works the simulation. */
+const renderGoal = () => {
+    const bar = document.getElementById('goal');
+    const solved = progress.count(sim);
+    const done = progress.has(sim.id, active);
+    const allDone = solved === sim.challenges.length;
+    bar.classList.toggle('done', done);
+    bar.innerHTML = `<span class="badge">${done ? '✓' : active + 1}</span>
+        <span class="text"><b>${allDone ? t('allSolved') : `${t('goal')} ${active + 1}/${sim.challenges.length}`}</b>
+        ${allDone ? '' : esc(tr(sim.challenges[active].text))}</span>
+        <span class="count">${solved}/${sim.challenges.length}</span>`;
+};
+
 const renderChallenges = () => {
+    renderGoal();
     document.getElementById('challenges').innerHTML = sim.challenges.map((c, i) => {
         const done = progress.has(sim.id, i);
         return `<li class="challenge ${i === active ? 'active' : ''} ${done ? 'done' : ''}">
@@ -68,7 +82,7 @@ const mount = async(options) => {
     const module = await import(`../../vendor/aisim/sims/${sim.file}`);
     const box = document.getElementById('sim');
     box.innerHTML = '<div class="aisim-host"></div>';
-    instance = new module[sim.cls](box.firstChild, {...sim.options, ...options, lang, onChange});
+    instance = new module[sim.cls](box.firstChild, {...sim.options, ...options, lang: simLang, onChange});
 };
 
 if (!sim) {
@@ -81,9 +95,12 @@ if (!sim) {
         <p class="crumbs"><a href="./">← ${t('home')}</a></p>
         <h1>${sim.icon} ${esc(tr(sim.title))}</h1>
         <div class="lab-grid">
-            <section class="sim-area"><div id="sim"></div></section>
+            <section class="sim-area">
+                ${simLang !== lang ? `<p class="note">${t('simInEnglish')}</p>` : ''}
+                <div id="sim"></div>
+            </section>
             <aside class="side">
-                <div class="panel">
+                <div class="panel" id="challenges-panel">
                     <h2>${t('challenges')}</h2>
                     <ol id="challenges" class="challenges"></ol>
                 </div>
@@ -101,6 +118,7 @@ if (!sim) {
                 </div>
             </aside>
         </div>
+        <button type="button" id="goal" class="goal-bar"></button>
         <div id="toast" class="toast" role="status" aria-live="polite"></div>`;
 
     renderChallenges();
@@ -116,6 +134,10 @@ if (!sim) {
         renderChallenges();
         await mount(sim.challenges[active].setup);
         history.replaceState(null, '', `?sim=${sim.id}`);
+        document.getElementById('sim').scrollIntoView({behavior: 'smooth', block: 'start'});
+    });
+    document.getElementById('goal').addEventListener('click', () => {
+        document.getElementById('challenges-panel').scrollIntoView({behavior: 'smooth', block: 'start'});
     });
     document.getElementById('share').addEventListener('click', async(e) => {
         await navigator.clipboard.writeText(shareUrl());
