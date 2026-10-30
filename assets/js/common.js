@@ -25,12 +25,12 @@ export const renderChrome = () => {
         `<a href="${esc(langUrl(code))}" class="${code === lang ? 'active' : ''}" hreflang="${code}" lang="${code}" title="${name}"
             ${code === lang ? 'aria-current="true"' : ''}><span aria-hidden="true">${code.toUpperCase()}</span><span class="sr-only">${name}</span></a>`).join('');
     document.getElementById('site-header').innerHTML = `
-        <a class="brand" href="./"><span class="brand-mark">AI</span><span>AISim <b>Lab</b></span></a>
+        <a class="brand" href="./"><img class="brand-logo" src="assets/img/ai4vet-logo.webp" width="40" height="40" alt="AI for VET"><span>AISim <b>Lab</b></span></a>
         <nav class="lang" aria-label="Language">${switcher}</nav>`;
     document.getElementById('site-footer').innerHTML = `
         <div class="eu"><span class="eu-flag" aria-hidden="true">★</span><strong>${t('euFunded')}</strong></div>
         <p class="disclaimer">${t('disclaimer')}</p>
-        <p class="links"><a href="${LINKS.project}">${t('project')}</a> · <a href="${LINKS.source}">${t('source')}</a></p>`;
+        <p class="links"><a href="${LINKS.project}"><img src="assets/img/ai4vet-logo.webp" width="24" height="24" alt="">${t('project')}</a> · <a href="${LINKS.source}">${t('source')}</a></p>`;
 };
 
 const KEY = 'aisimlab-progress';
