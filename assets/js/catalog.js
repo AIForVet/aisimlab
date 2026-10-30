@@ -447,6 +447,82 @@ export const SIMS = [
             },
         ],
     },
+    {
+        id: 'convolution',
+        file: 'convolution.js',
+        cls: 'ConvolutionSim',
+        icon: '🖼️',
+        level: 2,
+        title: {
+            en: 'Convolution & Image Filters',
+            sr: 'Konvolucija i filteri slike',
+            sk: 'Konvolúcia a obrazové filtre',
+            pt: 'Convolução e filtros de imagem',
+        },
+        summary: {
+            en: 'How a 3×3 grid of weights blurs, sharpens or finds edges – the first step of every image-recognition network.',
+            sr: 'Kako mreža 3×3 težina zamućuje, izoštrava ili pronalazi ivice – prvi korak svake mreže za prepoznavanje slika.',
+            sk: 'Ako mriežka 3×3 váh rozmazáva, zaostruje alebo hľadá hrany – prvý krok každej siete na rozpoznávanie obrazu.',
+            pt: 'Como uma grelha 3×3 de pesos desfoca, realça ou encontra contornos – o primeiro passo de qualquer rede de reconhecimento de imagens.',
+        },
+        about: {
+            en: [
+                'A grayscale image is a table of numbers (0 = black, 1 = white). A convolution slides a small 3×3 kernel over it: every output pixel is the sum of the 9 surrounding pixels multiplied by the kernel weights, divided by the divisor.',
+                'Equal positive weights average the neighbours and blur the image (and its noise). Weights that subtract one side from the other respond only where the brightness changes – at edges. Tap a pixel to see the calculation.',
+                'A convolutional neural network (CNN) does exactly this, but learns the kernel weights itself: the first layers find edges, the later ones combine them into shapes and objects.',
+            ],
+            sr: [
+                'Crno-bela slika je tabela brojeva (0 = crno, 1 = belo). Konvolucija klizi malim kernelom 3×3 preko nje: svaki piksel rezultata je zbir 9 okolnih piksela pomnoženih težinama kernela, podeljen deliocem.',
+                'Jednake pozitivne težine uprosečavaju susede i zamućuju sliku (i njen šum). Težine koje oduzimaju jednu stranu od druge reaguju samo tamo gde se svetlina menja – na ivicama. Dodirnite piksel da vidite računanje.',
+                'Konvoluciona neuronska mreža (CNN) radi upravo ovo, ali težine kernela uči sama: prvi slojevi pronalaze ivice, kasniji ih spajaju u oblike i predmete.',
+            ],
+            sk: [
+                'Čiernobiely obrázok je tabuľka čísel (0 = čierna, 1 = biela). Konvolúcia po ňom posúva malé jadro 3×3: každý výstupný pixel je súčet 9 okolitých pixelov vynásobených váhami jadra, vydelený deliteľom.',
+                'Rovnaké kladné váhy spriemerujú susedov a rozmažú obrázok (aj jeho šum). Váhy, ktoré odčítajú jednu stranu od druhej, reagujú len tam, kde sa mení jas – na hranách. Ťuknite na pixel a uvidíte výpočet.',
+                'Konvolučná neurónová sieť (CNN) robí presne toto, ale váhy jadier sa učí sama: prvé vrstvy hľadajú hrany, ďalšie ich skladajú do tvarov a predmetov.',
+            ],
+            pt: [
+                'Uma imagem em tons de cinzento é uma tabela de números (0 = preto, 1 = branco). A convolução desliza sobre ela um pequeno núcleo 3×3: cada píxel do resultado é a soma dos 9 píxeis vizinhos multiplicados pelos pesos do núcleo, dividida pelo divisor.',
+                'Pesos positivos iguais fazem a média dos vizinhos e desfocam a imagem (e o seu ruído). Pesos que subtraem um lado ao outro só reagem onde o brilho muda – nos contornos. Toque num píxel para ver o cálculo.',
+                'Uma rede neuronal convolucional (CNN) faz exatamente isto, mas aprende ela própria os pesos dos núcleos: as primeiras camadas encontram contornos, as seguintes juntam-nos em formas e objetos.',
+            ],
+        },
+        options: {image: 'shapes', preset: 'identity', kernel: '', divisor: '', abs: '', target: '', presets: true},
+        state: (s) => ({image: s.imageKey, kernel: s.kernel.join(','), divisor: s.divisor, abs: s.abs, target: s.targetKey,
+            presets: s.showPresets}),
+        challenges: [
+            {
+                setup: {image: 'stripes', preset: 'identity', target: 'sobelx', presets: true},
+                text: {
+                    en: 'Stripes: which ready-made filter produces the target image? Reach a match of at least 95%.',
+                    sr: 'Pruge: koji gotov filter daje ciljnu sliku? Dostignite podudaranje od bar 95%.',
+                    sk: 'Pruhy: ktorý hotový filter vytvorí cieľový obrázok? Dosiahnite zhodu aspoň 95 %.',
+                    pt: 'Riscas: que filtro pronto produz a imagem-alvo? Atinja uma correspondência de pelo menos 95%.',
+                },
+                check: (p, m) => p.target === 'sobelx' && m.match >= 0.95,
+            },
+            {
+                setup: {image: 'noisy', preset: 'identity', target: 'gaussian', presets: false},
+                text: {
+                    en: 'Noisy image, no ready-made filters: type a kernel and divisor that remove the noise like the target (match ≥ 95%).',
+                    sr: 'Slika sa šumom, bez gotovih filtera: upišite kernel i delilac koji uklanjaju šum kao na cilju (podudaranje ≥ 95%).',
+                    sk: 'Zašumený obrázok, bez hotových filtrov: zadajte jadro a deliteľ, ktoré odstránia šum ako na cieli (zhoda ≥ 95 %).',
+                    pt: 'Imagem com ruído, sem filtros prontos: escreva um núcleo e um divisor que removam o ruído como no alvo (correspondência ≥ 95%).',
+                },
+                check: (p, m) => p.target === 'gaussian' && m.match >= 0.95,
+            },
+            {
+                setup: {image: 'shapes', preset: 'identity', target: 'sobely', presets: false},
+                text: {
+                    en: 'Build a horizontal edge detector by hand: weights, divisor and absolute value (match ≥ 95%).',
+                    sr: 'Napravite ručno detektor horizontalnih ivica: težine, delilac i apsolutna vrednost (podudaranje ≥ 95%).',
+                    sk: 'Zostavte ručne detektor vodorovných hrán: váhy, deliteľ a absolútna hodnota (zhoda ≥ 95 %).',
+                    pt: 'Construa à mão um detetor de contornos horizontais: pesos, divisor e valor absoluto (correspondência ≥ 95%).',
+                },
+                check: (p, m) => p.target === 'sobely' && m.match >= 0.95,
+            },
+        ],
+    },
 ];
 
 export const findSim = (id) => SIMS.find((s) => s.id === id);
