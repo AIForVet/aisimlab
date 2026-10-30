@@ -46,6 +46,7 @@ git init -b main
 git remote add origin https://github.com/AIForVet/aisimlab.git
 git fetch origin
 git reset --hard origin/main
+git branch --set-upstream-to=origin/main main
 ```
 
 Update: `cd ~/public_html && git pull`
