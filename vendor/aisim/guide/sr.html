@@ -1,0 +1,197 @@
+<h1 id="ai-for-vet--pedagoško-tehnički-priručnik-za-nastavnike">AI for VET – Pedagoško-tehnički priručnik za nastavnike</h1>
+<h2 id="integracija-interaktivnih-simulacija-veštačke-inteligencije-i-mašinskog-učenja-u-moodle-okruženje">Integracija interaktivnih simulacija veštačke inteligencije i mašinskog učenja u Moodle okruženje</h2>
+<p><em>Projekat: <strong>AI for VET</strong> (Artificial Intelligence for Vocational Education and Training)</em><br>
+<em>Program: <strong>Erasmus+</strong></em><br>
+<em>Zvanični portal:</em> <a href="https://aiforvet.eu/">https://aiforvet.eu/</a><br>
+<em>Simulacije bez Moodle-a:</em> <a href="https://sim.aiforvet.eu/">https://sim.aiforvet.eu/</a><br>
+<em>Autori i tehnički tim projekta AI for VET</em><br>
+<em>Verzija priručnika: 1.1 (Oktobar 2026)</em><br>
+<em>Kompatibilnost: Moodle 4.5 LTS, 5.0, 5.1, 5.2, 5.3+</em></p>
+<hr>
+<h2 id="sadržaj">Sadržaj</h2>
+<ol><li><a href="#1-uvod-i-pedagoški-okvir-projekta-ai-for-vet">Uvod i pedagoški okvir projekta AI for VET</a><ul><li>1.1. Izazov: Zašto AI u srednjem stručnom obrazovanju?</li><li>1.2. Pedagoški pristup: Od vizuelne intuicije do inženjerskog razumevanja</li><li>1.3. Arhitektura Moodle AI paketa (Filter, Kviz, TinyMCE editor)</li></ul></li><li><a href="#2-pedagoški-vodič-kroz-9-simulacija">Pedagoški vodič kroz 9 simulacija</a><ul><li>2.1. Modul 1: Gradijentni spust i optimizacija modela (<code>gradient_descent</code>)</li><li>2.2. Modul 2: Matrica konfuzije i prag odlučivanja (<code>confusion_matrix</code>)</li><li>2.3. Modul 3: Polinomska regresija i regularizacija (<code>regression</code>)</li><li>2.4. Modul 4: Nelinearne granice odlučivanja – k-NN i Stablo (<code>knn_tree</code>)</li><li>2.5. Modul 5: Nenadgledano učenje i K-Means klasterovanje (<code>kmeans</code>)</li><li>2.6. Modul 6: Perceptron i neuronska mreža (<code>neural_network</code>)</li><li>2.7. Modul 7: Konvolucija i filteri slike (<code>convolution</code>)</li><li>2.8. Modul 8: Učenje potkrepljivanjem – Q-learning (<code>q_learning</code>)</li><li>2.9. Modul 9: Podela podataka i pristrasnost (<code>data_bias</code>)</li></ul></li><li><a href="#3-tehničko-uputstvo-za-nastavnike">Tehničko uputstvo za nastavnike</a><ul><li>3.1. Korišćenje vizuelnog TinyMCE editora (<code>tiny_aisim</code>)</li><li>3.2. Kreiranje zadataka sa automatskim ocenjivanjem (<code>qtype_aisim</code>)</li><li>3.3. Uvoz gotove baze pitanja (Moodle XML)</li><li>3.4. AISim Lab: simulacije bez Moodle-a</li></ul></li><li><a href="#4-metodičke-preporuke-i-organizacija-nastavnog-časa">Metodičke preporuke i organizacija nastavnog časa</a><ul><li>4.1. Struktura radioničkog/blok časa (90 minuta)</li><li>4.2. Formativno ocenjivanje i učenje kroz greške</li><li>4.3. Diferencirana nastava: Prilagođavanje učenicima različitih nivoa</li><li>4.4. Predlog redosleda simulacija</li></ul></li><li><a href="#5-prilozi-i-brzi-pregled-formula">Prilozi i brzi pregled formula</a></li></ol>
+<hr>
+<h2 id="1-uvod-i-pedagoški-okvir-projekta-ai-for-vet">1. Uvod i pedagoški okvir projekta AI for VET</h2>
+<h3 id="11-izazov-zašto-ai-u-srednjem-stručnom-obrazovanju">1.1. Izazov: Zašto AI u srednjem stručnom obrazovanju?</h3>
+<p>U savremenoj industriji, elektrotehnici, mašinstvu, mehatronici i informacionim tehnologijama, veštačka inteligencija (AI) i mašinsko učenje (ML) više nisu domen isključivo akademskih istraživanja i doktorskih studija. Učenici srednjih stručnih škola (VET – <em>Vocational Education and Training</em>) danas se susreću sa:</p>
+<ul><li>Automatizovanom optičkom kontrolom kvaliteta na proizvodnim trakama.</li><li>Prediktivnim održavanjem elektromotornih pogona na osnovu vibracionih i termičkih senzora.</li><li>Inteligentnim energetskim menadžmentom i optimizacijom potrošnje zgrada.</li><li>Klasifikacijom biomedicinskih signala i autonomnim mobilnim robotima.</li></ul>
+<p>Međutim, tradicionalni način podučavanja mašinskog učenja često pati od dve krajnosti:</p>
+<ol><li><strong>Preterana matematička apstrakcija:</strong> Uvođenje teških diferencijalnih jednačina, parcijalnih izvoda i matričnih transformacija koje obeshrabruju učenike stručnih škola.</li><li><strong>&quot;Crna kutija&quot; biblioteke:</strong> Pozivanje gotovih Python funkcija (<code>model.fit()</code>, <code>model.predict()</code>) gde učenici vide rezultat, ali nemaju nikakav intuitivni uvid u to šta algoritam zapravo radi &quot;ispod haube&quot;.</li></ol>
+<h3 id="12-pedagoški-pristup-od-vizuelne-intuicije-do-inženjerskog-razumevanja">1.2. Pedagoški pristup: Od vizuelne intuicije do inženjerskog razumevanja</h3>
+<p>Paket alata <strong>AI for VET</strong> uvodi <strong>interaktivno eksperimentalno učenje (Active Inquiry-Based Learning)</strong>:</p>
+<ul><li><strong>Eksperimentisanje u realnom vremenu:</strong> Učenik menja hiperparametre (klizačima i dugmićima) i odmah na ekranu vidi kako algoritam reaguje.</li><li><strong>Klijentsko izvršavanje bez instalacije:</strong> Nema potrebe za instaliranjem Pythona, CUDA drajvera ili podešavanjem Jupyter servera – sve simulacije rade 100% u browseru unutar Moodle-a, čak i na skromnim školskim računarima, tabletima i pametnim telefonima.</li><li><strong>Dvosmerni pedagoški ciklus:</strong> <ol><li><em>Faza istraživanja (Istraživačka lekcija):</em> Učenik slobodno pomera parametre i posmatra zakonitosti.</li><li><em>Faza provere i primene (Kviz):</em> Učenik dobija inženjerski problem iz prakse gde algoritam mora dovesti u traženu zonu tolerancije, pri čemu Moodle automatski validira rešenje.</li></ol></li></ul>
+<h3 id="13-arhitektura-moodle-ai-paketa">1.3. Arhitektura Moodle AI paketa</h3>
+<p>Komplet se sastoji od tri međusobno povezane komponente:</p>
+<pre><code>+---------------------------------------------------------------------------------+
+|                               MOODLE PLATFORMA                                  |
+|                                                                                 |
+|  +--------------------------+  +----------------------+  +-------------------+  |
+|  |     moodle-tiny_aisim    |  |  moodle-filter_aisim |  | moodle-qtype_aisim|  |
+|  |   (TinyMCE 6/7 Editor)   |  | (Rendering &amp; Engine) |  |  (Kviz zadaci &amp;   |  |
+|  |                          |  |                      |  | Auto-ocenjivanje) |  |
+|  | - Dugme u traci editora  |  | - 9 simulacija u     |  | - Ciljne metrike  |  |
+|  | - Modalni dijalog        |  |   browseru           |  | - Tolerancije     |  |
+|  | - Odabir scenarija       |  | - 5 jezika           |  | - Automatski      |  |
+|  | - Dvoklik za izmenu      |  | - Režim samo-čitanje |  |   bodovi i saveti |  |
+|  +--------------------------+  +----------------------+  +-------------------+  |
++---------------------------------------------------------------------------------+</code></pre>
+<p>Simulacije prate jezik korisnika u Moodle-u: uključeni su engleski, srpski (latinica i ćirilica), slovački i portugalski.</p>
+<hr>
+<h2 id="2-pedagoški-vodič-kroz-9-simulacija">2. Pedagoški vodič kroz 9 simulacija</h2>
+<p>Simulacije su poređane od jednostavnijih ka složenijim. Prvih pet pokriva osnove (optimizacija, ocenjivanje modela, prepodešavanje, klasifikacija, klasterovanje), a moduli 6–9 nadograđuju ih neuronskim mrežama, obradom slike, učenjem iz nagrada i pitanjem odgovornog rada sa podacima.</p>
+<h3 id="21-modul-1-gradijentni-spust-i-optimizacija-modela-gradient_descent"><span id="gradient_descent"></span>2.1. Modul 1: Gradijentni spust i optimizacija modela (<code>gradient_descent</code>)</h3>
+<ul><li><strong>Fokus:</strong> Minimizacija funkcije troška J(w), stopa učenja α, konveksne vs. nekonveksne funkcije, lokalni minimumi.</li></ul>
+<h4 id="pedagoška-metafora">Pedagoška metafora</h4>
+<p>Zamislite planinara koji se po gustoj magli spušta sa vrha planine u dolinu. On ne vidi celu mapu, već samo nagib tla pod svojim nogama. U svakom koraku opipava u kom pravcu je najveći pad i pravi korak u tom smeru. Veličina njegovog koraka jeste <strong>stopa učenja (α)</strong>.</p>
+<h4 id="inženjerska-primena">Inženjerska primena</h4>
+<ul><li>Automatsko podešavanje regulatora u mehatroničkim sistemima.</li><li>Ažuriranje sinaptičkih težina u veštačkim neuronskim mrežama (Backpropagation).</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>Premala stopa učenja (α = 0.01):</strong> Algoritam izuzetno sporo napreduje; posle 50 iteracija je jedva prešao trećinu puta.</li><li><strong>Optimalna stopa učenja (α = 0.10 – 0.20):</strong> Brza i stabilna konvergencija direktno u minimum funkcije.</li><li><strong>Prevelika stopa učenja (α ≥ 1.05 kod parabole):</strong> Dolazi do <strong>oscilacija i divergencije</strong> – algoritam preskače dno, gubi stabilnost i &quot;odleće&quot; u beskonačnost.</li><li><strong>Nekonveksna funkcija troška:</strong> Učenik uočava postojanje lokalnih minimuma i shvata zašto početna tačka (w₀) određuje u kojoj &quot;dolini&quot; će model završiti.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Ispitujete ponašanje gradijentnog spusta na konveksnoj funkciji troška čiji je minimum J(w) = 1.00. Podesite stopu učenja (α) i pokrenite algoritam tako da trošak padne na J(w) ≤ 1.01.&quot;</em></p></blockquote>
+<hr>
+<h3 id="22-modul-2-matrica-konfuzije-i-prag-odlučivanja-confusion_matrix"><span id="confusion_matrix"></span>2.2. Modul 2: Matrica konfuzije i prag odlučivanja (<code>confusion_matrix</code>)</h3>
+<ul><li><strong>Fokus:</strong> Evaluacija binarnog klasifikatora, nebalansirane klase, prag odluke θ, TP, FP, FN, TN, Precision, Recall, F1-score.</li></ul>
+<h4 id="pedagoški-izazov-zašto-tačnost-accuracy-laže">Pedagoški izazov: Zašto tačnost (Accuracy) laže?</h4>
+<p>U industrijskoj kontroli kvaliteta, recimo da fabrika proizvodi 1000 komada na sat, od kojih je 980 ispravnih i 20 neispravnih (škart). Ako model sve komade proglasi ispravnim, njegova tačnost je neverovatnih <strong>98% (980/1000)</strong>! Međutim, kao industrijski sistem on je <strong>potpuno beskoristan</strong> jer je propustio 100% neispravnih komada.</p>
+<h4 id="značenje-metrika-na-jednostavan-način">Značenje metrika na jednostavan način</h4>
+<ul><li><strong>Prag odluke (θ):</strong> Granična verovatnoća iznad koje komad proglašavamo škartom.</li><li><strong>Precision (Preciznost):</strong> Od svih komada koje je model proglasio škartom, koliko je stvarno bilo neispravno? (Visoka preciznost znači malo nepotrebno bačenih ispravnih komada).</li><li><strong>Recall (Odziv / Osetljivost):</strong> Od svih stvarno neispravnih komada, koliko je model uspeo da ulovi? (Visok odziv znači da nijedan defektan komad ne ide kupcu).</li><li><strong>F1-score:</strong> Harmonijska sredina preciznosti i odziva – ključna kompromisna inženjerska metrika.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-1">Šta učenici uočavaju u simulaciji</h4>
+<ul><li>Pomeranjem praga θ ulevo (nizak prag, npr. 0.20): Model postaje &quot;oprezan&quot;, hvata sve defekte (Recall raste ka 100%), ali pravi lažne uzbune (Precision pada).</li><li>Pomeranjem praga θ udesno (visok prag, npr. 0.80): Model je &quot;siguran&quot; kad nešto označi kao škart (Precision raste), ali propušta defekte (Recall drastično pada).</li></ul>
+<h4 id="tipičan-zadatak-za-kviz-1">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Podesite prag odlučivanja (θ) klasifikatora tako da uhvatite većinu škarta bez previše lažnih uzbuna: odziv (Recall) ≥ 0.80 i preciznost (Precision) ≥ 0.70.&quot;</em></p></blockquote>
+<hr>
+<h3 id="23-modul-3-polinomska-regresija-i-regularizacija-regression"><span id="regression"></span>2.3. Modul 3: Polinomska regresija i regularizacija (<code>regression</code>)</h3>
+<ul><li><strong>Fokus:</strong> Modelovanje nelinearnih zavisnosti, stepen polinoma d, prepodešavanje (<em>overfitting</em>), podučenost (<em>underfitting</em>), greška na trening vs. test skupu, L₂ regularizacija (λ).</li></ul>
+<h4 id="pedagoška-metafora-1">Pedagoška metafora</h4>
+<p>Podučenost (<em>underfitting</em>) je kada učenik pročita samo naslove lekcija i na ispitu ne zna detalje (pravac pokušava da opiše talas). Prepodešavanje (<em>overfitting</em>) je kada učenik nabuba napamet svako slovo iz zbirke uključujući štamparske greške – na ispitu čim se promeni jedan broj u zadatku dobija nulu jer nije shvatio suštinu trenda.</p>
+<h4 id="inženjerska-primena-1">Inženjerska primena</h4>
+<ul><li>Kalibracija senzora temperature i pritiska.</li><li>Predviđanje opterećenja transformatora i kablova u zavisnosti od doba dana i temperature okoline.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-2">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>d = 1 (Linearni model):</strong> Prava linija ne može da prati sinusoidu (R² nizak i na trening i na test skupu).</li><li><strong>d = 3 (Kubni model):</strong> Model glatko prati talas, odlična generalizacija na novim podacima.</li><li><strong>d = 5 i λ = 0 (Overfitting):</strong> Kriva prolazi kroz svaku tačku trening skupa sa ogromnim talasima i oscilacijama na krajevima. Greška na treningu je nula, ali na testu je katastrofalna!</li><li><strong>Uvođenje regularizacije (λ = 0.01 – 0.10):</strong> Čak i sa visokim stepenom d = 5, kazneni član λ·Σw² &quot;pegla&quot; krivu i sprečava preterano podivljale koeficijente.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz-2">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Za periodični signal sa šumom odaberite stepen polinoma najviše 7 tako da model generalizuje trend bez preprilagođavanja, uz validacionu grešku MSE ≤ 0.19.&quot;</em></p></blockquote>
+<hr>
+<h3 id="24-modul-4-nelinearne-granice-odlučivanja--k-nn-i-stablo-knn_tree"><span id="knn_tree"></span>2.4. Modul 4: Nelinearne granice odlučivanja – k-NN i Stablo (<code>knn_tree</code>)</h3>
+<ul><li><strong>Fokus:</strong> Nadgledana klasifikacija, k-najbližih suseda, stablo odlučivanja, granica odlučivanja (<em>decision boundary</em>), hiperparametri k i maksimalna dubina stabla (<em>max depth</em>).</li></ul>
+<h4 id="poređenje-dva-pristupa">Poređenje dva pristupa</h4>
+<ul><li><strong>k-NN (Algoritam baziran na pamćenju instanci):</strong> &quot;Kaži mi ko su ti prijatelji i reći ću ti ko si.&quot; Za novu tačku pronalazi k prostorno najbližih komšija i glasa po većini.</li><li><strong>Stablo odlučivanja (Hijerarhijsko deljenje prostora):</strong> Niz &quot;IF-THEN-ELSE&quot; pitanja koja seku ravan ortogonalnim linijama paralelnim koordinatnim osama.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-3">Šta učenici uočavaju u simulaciji</h4>
+<ul><li><strong>Kod k-NN:</strong> <ul><li>k = 1: Granica je izlomljena i ima izolovana &quot;ostrva&quot; oko svake tačke sa šumom (overfitting).</li><li>k = 3 – 5: Glatka, organska granica prilagođena nelinearnim oblicima (npr. Dva polumeseca).</li><li>k = 15: Preterano uprošćena granica koja gubi fine detalje.</li></ul></li><li><strong>Kod Stabla odlučivanja:</strong><ul><li>Dubina 1 (Stump): Samo jedan pravougaoni rez – model je previše primitivan.</li><li>Dubina 3 – 4: Pravougaona particija koja lepo aproksimira klastere.</li><li>Dubina 6: Mikroskopski mali pravougaonici oko svake tačke.</li></ul></li></ul>
+<hr>
+<h3 id="25-modul-5-nenadgledano-učenje-i-k-means-klasterovanje-kmeans"><span id="kmeans"></span>2.5. Modul 5: Nenadgledano učenje i K-Means klasterovanje (<code>kmeans</code>)</h3>
+<ul><li><strong>Fokus:</strong> Klasterovanje bez labela, centroidi, Euklidsko rastojanje, inercija (suma kvadrata odstupanja), konvergencija u koracima.</li></ul>
+<h4 id="inženjerska-primena-2">Inženjerska primena</h4>
+<ul><li>Segmentacija profila potrošnje električne energije (industrijski, stambeni, noćni potrošači).</li><li>Kompresija boja i analiza satelitskih snimaka poljoprivrednog zemljišta.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-4">Šta učenici uočavaju u simulaciji</h4>
+<ol><li>Učenik klikće na dugme <strong>&quot;Sledeći korak&quot;</strong> i posmatra dva naizmenična koraka:<ul><li><em>Faza dodele:</em> Svaka tačka se boji bojom onog centroida kome je geometrijski najbliža.</li><li><em>Faza ažuriranja:</em> Svaki centroid se pomera tačno u matematičko težište (srednju vrednost) svojih dodeljenih tačaka.</li></ul></li><li>Ako izaberemo K = 2 na skupu od 3 klastera, vidimo da jedan centroid pokušava da &quot;pokrije&quot; dve odvojene grupe.</li><li>Posmatranje pada funkcije inercije dok se centroidi ne umire (konvergencija).</li></ol>
+<hr>
+<h3 id="26-modul-6-perceptron-i-neuronska-mreža-neural_network"><span id="neural_network"></span>2.6. Modul 6: Perceptron i neuronska mreža (<code>neural_network</code>)</h3>
+<ul><li><strong>Fokus:</strong> Perceptron, linearna razdvojivost, skriveni sloj, aktivacione funkcije (sigmoid, tanh, ReLU), epohe, funkcija gubitka (log-loss), stopa učenja, početne težine.</li></ul>
+<h4 id="pedagoška-metafora-2">Pedagoška metafora</h4>
+<p>Jedan neuron je kao lenjir: može da povuče samo jednu pravu liniju i kaže &quot;levo je crveno, desno je plavo&quot;. Skriveni sloj je tim od nekoliko lenjira čije linije izlazni neuron spaja u savijenu granicu – kao kad od više pravih ivica isečete krug od papira. Što više neurona, to finije sečenje.</p>
+<h4 id="inženjerska-primena-3">Inženjerska primena</h4>
+<ul><li>Prepoznavanje ispravnih i neispravnih delova iz više senzorskih merenja.</li><li>Neuronske mreže su osnova prepoznavanja govora, slike i velikih jezičkih modela – ovde je ista ideja u najmanjem mogućem obliku.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-5">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>Linearno razdvojivi podaci, 0 skrivenih slojeva:</strong> Perceptron brzo nauči pravu liniju i dostiže skoro 100%.</li><li><strong>XOR (ukršteni kvadranti), 0 skrivenih slojeva:</strong> Tačnost ostaje oko 50% bez obzira na trajanje treninga – nijedna prava ne razdvaja klase. Simulacija to i kaže u savetu.</li><li><strong>XOR sa jednim skrivenim slojem od 2–4 neurona:</strong> Granica se savija i tačnost prelazi 98%. Debljina linija na crtežu mreže pokazuje koje veze su postale jake.</li><li><strong>Krug u krugu:</strong> Sa 2 neurona mreža često zastane; sa 3–4 neurona i dugmetom &quot;Nove težine&quot; pronalazi zatvorenu granicu oko unutrašnje klase.</li><li><strong>Prevelika stopa učenja (npr. 3):</strong> Gubitak &quot;eksplodira&quot; – ista pouka kao kod gradijentnog spusta, jer je trening mreže upravo gradijentni spust.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz-3">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Kod podataka XOR perceptron ostaje na 50% tačnosti. Dodajte skriveni sloj i postignite tačnost ≥ 98% sa najviše 4 skrivena neurona.&quot;</em></p></blockquote>
+<hr>
+<h3 id="27-modul-7-konvolucija-i-filteri-slike-convolution"><span id="convolution"></span>2.7. Modul 7: Konvolucija i filteri slike (<code>convolution</code>)</h3>
+<ul><li><strong>Fokus:</strong> Slika kao tabela brojeva, kernel 3×3, delilac, zamućivanje, izoštravanje, detekcija ivica (Sobel, Laplasijan), apsolutna vrednost, konvolucione neuronske mreže (CNN).</li></ul>
+<h4 id="pedagoška-metafora-3">Pedagoška metafora</h4>
+<p>Kernel je mala &quot;lupa sa pravilom&quot; koja klizi preko slike. Na svakom mestu pogleda 9 piksela, pomnoži ih svojim težinama i upiše jedan broj. Ako su sve težine iste, lupa uprosečava (zamućuje). Ako jednu stranu oduzima od druge, lupa &quot;vidi&quot; samo mesta gde se svetlina naglo menja – ivice.</p>
+<h4 id="inženjerska-primena-4">Inženjerska primena</h4>
+<ul><li>Optička kontrola kvaliteta: pronalaženje ogrebotina, pukotina i ivica delova na proizvodnoj traci.</li><li>Uklanjanje šuma sa slika kamera i medicinskih snimaka.</li><li>Prvi slojevi svake mreže za prepoznavanje slika (CNN) uče upravo ovakve kernele.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-6">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>Dodir na piksel</strong> prikazuje celo računanje: 9 vrednosti, 9 težina, zbir i deljenje. Ovo je najvažniji trenutak časa – konvolucija prestaje da bude &quot;magija&quot;.</li><li><strong>Zamućenje (prosek) i Gausovo zamućenje:</strong> Šum nestaje, ali i ivice postaju mekše.</li><li><strong>Zbir težina / delilac ≠ 1:</strong> Cela slika postaje svetlija ili tamnija – simulacija na to upozorava.</li><li><strong>Sobel bez apsolutne vrednosti:</strong> Ivice od svetlog ka tamnom daju negativne vrednosti i vide se kao crne. Uz |x| vide se obe vrste ivica.</li><li><strong>Ciljna slika i podudaranje (R²):</strong> Učenik pogađa ili sam sastavlja filter koji daje zadati rezultat.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz-4">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Slika je puna šuma, a gotovi filteri su skriveni. Upišite težine kernela i delilac tako da rezultat bude kao na ciljnoj slici, uz podudaranje ≥ 95%.&quot;</em></p>
+<p>(Jedno rešenje: težine 1 2 1 / 2 4 2 / 1 2 1 i delilac 16.)</p></blockquote>
+<hr>
+<h3 id="28-modul-8-učenje-potkrepljivanjem--q-learning-q_learning"><span id="q_learning"></span>2.8. Modul 8: Učenje potkrepljivanjem – Q-learning (<code>q_learning</code>)</h3>
+<ul><li><strong>Fokus:</strong> Agent, stanje, akcija, nagrada, Q-tabela, epizoda, stopa učenja α, faktor umanjenja γ, istraživanje ε (<em>exploration vs. exploitation</em>), politika.</li></ul>
+<h4 id="pedagoška-metafora-4">Pedagoška metafora</h4>
+<p>Dresura psa: niko psu ne objašnjava pravila, on samo dobija poslasticu kad uradi pravu stvar. Posle mnogo pokušaja pamti koji potez u kojoj situaciji donosi nagradu. Agent u simulaciji radi isto: −0.1 za svaki korak, +10 na cilju, −10 kad padne sa litice.</p>
+<h4 id="inženjerska-primena-5">Inženjerska primena</h4>
+<ul><li>Upravljanje robotima i autonomnim vozilima (kretanje, hvatanje predmeta).</li><li>Optimizacija upravljanja energijom (punjenje baterija, grejanje) i semaforima.</li><li>AI za igre – od šaha i Go do video igara.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-7">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>Lavirint:</strong> Na početku agent luta nasumično. Posle nekoliko desetina epizoda boje polja i strelice formiraju &quot;putokaz&quot; do cilja, a putanja naučene politike se skraćuje na 10 koraka.</li><li><strong>Litica, ε veliko (npr. 0.4):</strong> Agent nauči najkraći put tik uz ivicu, ali tokom treninga često nasumično padne – prosečna nagrada je niska. Sa ε = 0.05 pada ređe.</li><li><strong>Blizu ili daleko, γ = 0.5:</strong> Agent uzima malo blago T (+3) jer mu budućnost malo vredi. Kada se γ poveća (npr. 0.9), veliki cilj G (+10) postaje vredniji – ali samo ako ga je agent uopšte otkrio, za šta treba dovoljno ε.</li><li><strong>Dodir na polje</strong> prikazuje Q-vrednosti sva četiri poteza – učenik vidi brojeve iza strelice.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz-5">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Agent bira malo blago T (+3) u blizini. Promenite faktor umanjenja γ i istraživanje ε tako da nauči da ide do velikog cilja G (+10) u 4 koraka, za najviše 1000 epizoda. Objasnite ulogu svakog parametra.&quot;</em></p></blockquote>
+<hr>
+<h3 id="29-modul-9-podela-podataka-i-pristrasnost-data_bias"><span id="data_bias"></span>2.9. Modul 9: Podela podataka i pristrasnost (<code>data_bias</code>)</h3>
+<ul><li><strong>Fokus:</strong> Skup za trening i test skup, generalizacija, pamćenje (k = 1), reprezentativan uzorak, pristrasnost podataka (<em>data bias</em>), merenje tačnosti po grupama, pravednost modela.</li></ul>
+<h4 id="pedagoška-metafora-5">Pedagoška metafora</h4>
+<p>Ako ispit sastavite samo od zadataka koje je učenik već video, odlična ocena ne govori ništa. A ako i vežbe i ispit dolaze iz udžbenika u kome nema nijednog zadatka iz geometrije, učenik će i dalje imati odličnu ocenu – i pasti prvi put kad vidi trougao. Test skup može da otkrije samo greške koje uzorak sadrži.</p>
+<h4 id="inženjerska-primena-6">Inženjerska primena</h4>
+<ul><li>Model za kontrolu kvaliteta treniran na delovima iz jedne fabrike, a korišćen u drugoj (druga mašina, drugi materijal).</li><li>Sistemi za odobravanje kredita, zapošljavanje ili medicinsku dijagnostiku koji rade lošije za grupe kojih je bilo malo u podacima.</li><li>Evropski AI Act zahteva upravo ovo: kvalitetne, reprezentativne podatke i proveru za različite grupe.</li></ul>
+<h4 id="šta-učenici-uočavaju-u-simulaciji-8">Šta učenici uočavaju u simulaciji</h4>
+<ol><li><strong>Udeo fabrike B 5%:</strong> Test skup pokazuje oko 95%, a stvarna tačnost za fabriku B je mnogo niža. Prosečan rezultat sakriva grupu koja je retka.</li><li><strong>Povećanje udela B (npr. na 30–50%):</strong> Tačnost za B naglo raste, iako ukupan broj uzoraka ostaje isti – <em>koji</em> podaci su važniji od <em>koliko</em> podataka.</li><li><strong>&quot;B se ponaša slično&quot;:</strong> Pristrasnost ne škodi kada se grupe ne razlikuju – problem nastaje kada se razlikuju, a nisu zastupljene.</li><li><strong>k = 1:</strong> Tačnost na treningu je 100% (model je zapamtio svaku tačku), ali to ništa ne govori o kvalitetu.</li><li><strong>Mali test skup:</strong> Rezultat testa skače sa svakim novim uzorkom (🎲) – mali test je nepouzdano merilo.</li></ol>
+<h4 id="tipičan-zadatak-za-kviz-6">Tipičan zadatak za kviz</h4>
+<blockquote><p><em>&quot;Prikupljanje podataka je skupo. Sa najviše 120 uzoraka postignite da stvarna tačnost obe fabrike bude ≥ 88%. Šta je važnije: koliko podataka ili koji podaci?&quot;</em></p></blockquote>
+<hr>
+<h2 id="3-tehničko-uputstvo-za-nastavnike">3. Tehničko uputstvo za nastavnike</h2>
+<h3 id="31-korišćenje-vizuelnog-tinymce-editora-tiny_aisim"><span id="tiny_aisim"></span>3.1. Korišćenje vizuelnog TinyMCE editora (<code>tiny_aisim</code>)</h3>
+<p>Prilikom izrade lekcije (Page), knjige (Book), forum poruke ili opisa zadatka u Moodle-u:</p>
+<ol><li>U liniji sa alatkama TinyMCE editora kliknite na <strong>ikonu sa simbolom AI simulacije</strong> (ili u meniju izaberite <em>Insert &gt; AI Simulation...</em>).</li><li>Otvara se modalni prozor sa opcijama:<ul><li><strong>Tip simulacije:</strong> Izaberite jednu od 9 simulacija iz padajućeg menija.</li><li><strong>Specifični parametri:</strong> Izaberite početni scenario, prag, stopu učenja, stepen polinoma, broj klastera, arhitekturu mreže, sliku i filter, mapu agenta ili udeo grupe u podacima.</li><li><strong>Režim samo za čitanje (Read-only):</strong> Označite ovu opciju ukoliko želite da učenici mogu da posmatraju simulaciju, ali ne i da menjaju njene početne parametre.</li><li><strong>Pregled uživo (Preview):</strong> Na dnu dijaloga odmah vidite kako će izgledati kartica simulacije.</li></ul></li><li>Kliknite na <strong>&quot;Ubaci simulaciju&quot;</strong>.</li><li>U editoru se pojavljuje zaštićena kartica sa oznakom simulacije.</li><li><strong>Izmena postojećeg bloka:</strong> Dovoljno je da u editoru napravite <strong>dvoklik (double-click)</strong> na bilo koju postojeću karticu simulacije – editor će automatski otvoriti prozor sa učitanim parametrima te simulacije!</li></ol>
+<hr>
+<h3 id="32-kreiranje-zadataka-sa-automatskim-ocenjivanjem-qtype_aisim"><span id="qtype_aisim"></span>3.2. Kreiranje zadataka sa automatskim ocenjivanjem (<code>qtype_aisim</code>)</h3>
+<p>Ako želite da u Moodle kviz ubacite pitanje sa AI simulacijom:</p>
+<ol><li>Otvorite svoj kviz i izaberite <strong>Pitanja &gt; Dodaj novo pitanje</strong>.</li><li>Na listi tipova pitanja izaberite <strong>AI Simulation (<code>aisim</code>)</strong>.</li><li>Popunite osnovna polja:<ul><li><strong>Naziv pitanja:</strong> Npr. <em>Zadatak: Podešavanje praga za kontrolu kvaliteta</em>.</li><li><strong>Tekst pitanja:</strong> Opišite inženjerski problem koji učenik treba da reši.</li></ul></li><li>U sekciji <strong>Postavke AI simulacije</strong>:<ul><li><strong>Tip simulacije:</strong> Izaberite npr. <em>Matrica konfuzije</em>.</li><li><strong>Scenario / Skup podataka:</strong> Izaberite npr. <em>Industrijska kontrola (quality)</em>.</li><li><strong>Ciljna metrika 1 i 2:</strong> Npr. za matricu konfuzije odziv <code>0.80</code> i preciznost <code>0.70</code>. Značenje polja zavisi od simulacije – pogledajte pomoć (?) uz polja i tabelu u Prilogu.</li><li><strong>Dozvoljena tolerancija:</strong> Koristi se za gradijentni spust (pola poena za trošak do cilja + tolerancije) i konvoluciju (pola poena za podudaranje do cilja − tolerancije), npr. <code>0.05</code>.</li><li><strong>Početna konfiguracija:</strong> Opcioni JSON sa inicijalnim stanjem.</li></ul></li><li>Podesite povratne informacije za tačan, delimično tačan i netačan odgovor.</li><li>Sačuvajte pitanje. Kada učenik pokrene kviz, Moodle prikazuje interaktivnu simulaciju. Čim učenik klikne na <em>&quot;Proveri odgovor&quot;</em> ili preda test, Moodle upoređuje postignute vrednosti sa zadatim kriterijumima i automatski dodeljuje poene!</li></ol>
+<hr>
+<h3 id="33-uvoz-gotove-baze-pitanja-moodle-xml">3.3. Uvoz gotove baze pitanja (Moodle XML)</h3>
+<p>U repozitorijumu <code>moodle-qtype_aisim</code> nalazi se gotov paket od 27 zadataka – po tri za svaku od 9 simulacija (osnovni, srednji i napredni nivo):</p>
+<ol><li>Preuzmite fajl <a href="https://github.com/blagojevicboban/moodle-qtype_aisim/raw/master/demo/questions_aiforvet.xml"><code>questions_aiforvet.xml</code></a>.</li><li>U vašem Moodle kursu kliknite na <strong>Banka pitanja (Question bank) &gt; Uvoz (Import)</strong>.</li><li>Kao format fajla izaberite <strong>Moodle XML format</strong>.</li><li>Prevucite fajl <code>questions_aiforvet.xml</code> i kliknite na <strong>Uvezi</strong>.</li><li>Moodle će uvesti novu kategoriju <em>&quot;AI za VET - Baza simulacionih zadataka (27 pitanja)&quot;</em> sa kompletno konfigurisanim pitanjima koja odmah možete dodati u bilo koji test.</li></ol>
+<hr>
+<h3 id="34-aisim-lab-simulacije-bez-moodle-a">3.4. AISim Lab: simulacije bez Moodle-a</h3>
+<p>Na adresi <a href="https://sim.aiforvet.eu/">sim.aiforvet.eu</a> svih 9 simulacija radi samostalno, bez naloga i bez prikupljanja podataka, na srpskom, engleskom, slovačkom i portugalskom. Svaka simulacija ima kratko objašnjenje i tri izazova.</p>
+<ul><li><strong>Domaći zadatak i rad na telefonu:</strong> Učenici mogu da vežbaju van Moodle-a; napredak u izazovima čuva se samo u njihovom browseru.</li><li><strong>Dugme &quot;Kopiraj link do ove postavke&quot;:</strong> Pravi link do tačno određenog stanja simulacije – zgodno za projektor ili za poruku učenicima.</li><li><strong>Dugme &quot;Ugradi u Moodle&quot;:</strong> Daje gotov HTML kod za tu postavku koji se lepi u bilo koji Moodle tekst (potreban je <code>filter_aisim</code>).</li></ul>
+<hr>
+<h2 id="4-metodičke-preporuke-i-organizacija-nastavnog-časa">4. Metodičke preporuke i organizacija nastavnog časa</h2>
+<h3 id="41-struktura-radioničkog--blok-časa-90-minuta">4.1. Struktura radioničkog / blok časa (90 minuta)</h3>
+<p>Za postizanje maksimalnog učinka preporučuje se struktura od pet koraka:</p>
+<pre><code>+-----------------------------------------------------------------------------+
+| 1. Uvod i inženjerski problem (10-15 min)                                   |
+|    - Nastavnik predstavlja stvarni problem iz fabrike/prakse.               |
+|    - Postavlja se ključno pitanje: &quot;Kako mašina prepoznaje defekt?&quot;         |
++-----------------------------------------------------------------------------+
+                                      |
+                                      v
++-----------------------------------------------------------------------------+
+| 2. Vođeno vizuelno istraživanje (20 min)                                    |
+|    - Učenici otvaraju lekciju u Moodle-u i istražuju simulaciju.            |
+|    - Nastavnik zadaje mini-izazove: &quot;Šta se dešava kad stopu stavite na 1.2?&quot;|
++-----------------------------------------------------------------------------+
+                                      |
+                                      v
++-----------------------------------------------------------------------------+
+| 3. Diskusija u parovima i konceptualizacija (15 min)                        |
+|    - Učenici porede zapažanja, definišu ključne pojmove (overfitting, F1).  |
++-----------------------------------------------------------------------------+
+                                      |
+                                      v
++-----------------------------------------------------------------------------+
+| 4. Samostalno rešavanje izazova u Kvizu (25 min)                            |
+|    - Učenici rešavaju zadatke sa automatskim ocenjivanjem u Moodle kvizu.   |
+|    - Kviz je podešen na &quot;Immediate feedback&quot; sa neograničenim pokušajima.   |
++-----------------------------------------------------------------------------+
+                                      |
+                                      v
++-----------------------------------------------------------------------------+
+| 5. Refleksija i povezivanje sa strukom (15 min)                             |
+|    - Zaključak: Kako se ovi modeli primenjuju u njihovom budućem poslu.     |
++-----------------------------------------------------------------------------+</code></pre>
+<h3 id="42-formativno-ocenjivanje-i-učenje-kroz-greške">4.2. Formativno ocenjivanje i učenje kroz greške</h3>
+<ul><li>U Moodle kvizu preporučuje se podešavanje ponašanja pitanja na <strong>&quot;Interaktivno sa višestrukim pokušajima&quot; (Interactive with multiple tries)</strong> ili <strong>&quot;Trenutna povratna informacija&quot; (Immediate feedback)</strong>.</li><li>Cilj nije kazniti učenika ako prvi put podesi pogrešan prag, već omogućiti mu da kroz povratnu informaciju zaključi u kom smeru treba da koriguje parametre.</li><li>Učenici razvijaju <strong>inženjersku intuiciju</strong>: sistematski menjaju jednu po jednu varijablu i beleže promenu na izlazu.</li><li>Napredni zadaci iz baze (npr. Q-learning i pristrasnost podataka) završavaju se pitanjem &quot;Objasnite…&quot; – iskoristite ga za kratak usmeni ili pisani odgovor posle kviza.</li></ul>
+<h3 id="43-diferencirana-nastava-prilagođavanje-učenicima-različitih-nivoa">4.3. Diferencirana nastava: Prilagođavanje učenicima različitih nivoa</h3>
+<ul><li><strong>Osnovni nivo:</strong> Učenici se fokusiraju na pomeranje praga θ i stope α na pripremljenim 2D skupovima, posmatrajući samo krajnji status (Zeleno = Tačno / Crveno = Netačno). Kod konvolucije biraju gotove filtere, a kod Q-learninga posmatraju kako agent uči lavirint.</li><li><strong>Napredni nivo:</strong> Učenici analiziraju kompromis Precision vs. Recall, posmatraju ponašanje L₂ regularizacije kod polinoma petog stepena, ručno sastavljaju kernele, traže najmanju neuronsku mrežu koja rešava zadatak i objašnjavaju uticaj γ i ε na ponašanje agenta.</li></ul>
+<h3 id="44-predlog-redosleda-simulacija">4.4. Predlog redosleda simulacija</h3>
+<div class="table"><table><thead><tr><th>Čas / tema</th><th>Simulacije</th><th>Ključna ideja</th></tr></thead><tbody><tr><td>1. Kako model uči</td><td>Gradijentni spust</td><td>Učenje = smanjivanje greške u malim koracima</td></tr><tr><td>2. Kako merimo model</td><td>Matrica konfuzije, Podela podataka i pristrasnost</td><td>Tačnost nije dovoljna; test mora biti pošten i reprezentativan</td></tr><tr><td>3. Složenost modela</td><td>Polinomska regresija, k-NN i Stablo</td><td>Prejednostavan vs. prepodešen model</td></tr><tr><td>4. Učenje bez odgovora</td><td>K-Means</td><td>Grupisanje bez labela</td></tr><tr><td>5. Neuronske mreže i slika</td><td>Perceptron i neuronska mreža, Konvolucija</td><td>Od jednog neurona do prepoznavanja slike</td></tr><tr><td>6. Učenje iz nagrada</td><td>Q-learning</td><td>Istraživanje vs. iskorišćavanje, vrednost budućnosti</td></tr></tbody></table></div>
+<hr>
+<h2 id="5-prilozi-i-brzi-pregled-formula">5. Prilozi i brzi pregled formula</h2>
+<div class="table"><table><thead><tr><th>Naziv simulacije</th><th>Ključni parametri</th><th>Matematički model / Formula</th><th>Tipičan kriterijum uspeha</th></tr></thead><tbody><tr><td><strong>Gradijentni spust</strong></td><td>α (stopa), w₀ (početak)</td><td>w ← w − α · J′(w)</td><td>J(w) ≤ 1.01 (minimum je 1.00)</td></tr><tr><td><strong>Matrica konfuzije</strong></td><td>θ (prag odluke)</td><td>F1 = 2 · P · R / (P + R)</td><td>Recall ≥ 0.80 i Precision ≥ 0.70</td></tr><tr><td><strong>Polinomska regresija</strong></td><td>d (stepen), λ (regularizacija)</td><td>J(w) = (1/2m) · Σ(h(x) − y)² + (λ/2) · Σw²</td><td>Validaciona MSE ≤ 0.19 uz d ≤ 7</td></tr><tr><td><strong>k-NN klasifikacija</strong></td><td>k (broj suseda)</td><td>ŷ = najčešća klasa među k najbližih suseda</td><td>Tačnost ≥ 98%</td></tr><tr><td><strong>K-Means klasterovanje</strong></td><td>K (broj klastera)</td><td>min Σ ‖x − μ‖² (zbir kvadrata rastojanja do centroida)</td><td>Konvergencija uz K = 3 i WCSS ≤ 10</td></tr><tr><td><strong>Neuronska mreža</strong></td><td>slojevi, neuroni, aktivacija, stopa učenja</td><td>a = f(w · x + b); w ← w − α · ∂L/∂w</td><td>Tačnost ≥ 98% uz najviše 4 skrivena neurona</td></tr><tr><td><strong>Konvolucija</strong></td><td>kernel 3×3, delilac, |x|</td><td>y = Σ (težina · piksel) / delilac</td><td>Podudaranje sa ciljem (R²) ≥ 95%</td></tr><tr><td><strong>Q-learning</strong></td><td>α, γ, ε, broj epizoda</td><td>Q(s,a) ← Q(s,a) + α · (r + γ · max Q(s′,·) − Q(s,a))</td><td>Najkraći put (npr. 10 koraka) za ≤ 200 epizoda</td></tr><tr><td><strong>Podela podataka i pristrasnost</strong></td><td>veličina uzorka, udeo grupe B, test %, k</td><td>tačnost najslabije grupe = min(tačnost A, tačnost B)</td><td>Obe fabrike ≥ 88% uz ≤ 120 uzoraka</td></tr></tbody></table></div>
+<h4 id="značenje-polja-ciljna-metrika-u-pitanjima-qtype_aisim"><span id="qtype_aisim"></span>Značenje polja &quot;Ciljna metrika&quot; u pitanjima (<code>qtype_aisim</code>)</h4>
+<div class="table"><table><thead><tr><th>Simulacija</th><th>Ciljna metrika 1</th><th>Ciljna metrika 2</th><th>Pola poena</th></tr></thead><tbody><tr><td>Gradijentni spust</td><td>najveći dozvoljeni trošak J(w)</td><td>–</td><td>trošak do cilja + tolerancije</td></tr><tr><td>Matrica konfuzije</td><td>najmanji odziv (Recall)</td><td>najmanja preciznost (Precision)</td><td>ispunjen jedan uslov</td></tr><tr><td>Polinomska regresija</td><td>najveća validaciona MSE</td><td>najveći stepen d</td><td>ispunjen jedan uslov</td></tr><tr><td>k-NN i Stablo</td><td>najmanja tačnost na testu</td><td>–</td><td>tačnost do 5% ispod cilja</td></tr><tr><td>K-Means</td><td>najveća inercija (WCSS)</td><td>tačan broj klastera K (0 = bilo koji)</td><td>ispunjen jedan uslov</td></tr><tr><td>Neuronska mreža</td><td>najmanja tačnost</td><td>najviše skrivenih neurona (0 = bez ograničenja)</td><td>ispunjen jedan uslov</td></tr><tr><td>Konvolucija</td><td>najmanje podudaranje (R²)</td><td>–</td><td>podudaranje do cilja − tolerancije</td></tr><tr><td>Q-learning</td><td>najviše koraka do cilja</td><td>najviše epizoda treninga (0 = bez ograničenja)</td><td>agent stiže do cilja, ali duže ili posle više epizoda</td></tr><tr><td>Podela podataka i pristrasnost</td><td>najmanja tačnost najslabije fabrike</td><td>najveći broj uzoraka (0 = bez ograničenja)</td><td>tačnost ispunjena, ali uz previše uzoraka</td></tr></tbody></table></div>
+<hr>
+<p><em>Ovaj priručnik je razvijen u okviru Erasmus+ projekta AI for VET i distribuira se pod slobodnom licencom za sve nastavnike i obrazovne institucije.</em></p>

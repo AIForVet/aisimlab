@@ -112,6 +112,7 @@ if (!sim) {
                 </div>
                 <div class="panel tools">
                     <button type="button" class="btn" id="share">🔗 ${t('share')}</button>
+                    <a class="btn" href="guide.html#${sim.file.replace('.js', '')}">📘 ${t('guide')}</a>
                     <details id="embed">
                         <summary class="btn">🧩 ${t('embed')}</summary>
                         <p class="help">${t('embedHelp')}</p>

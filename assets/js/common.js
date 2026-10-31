@@ -7,8 +7,6 @@ export const LINKS = {
     tiny: 'https://github.com/blagojevicboban/moodle-tiny_aisim',
     project: 'https://aiforvet.eu/',
     youtube: 'https://www.youtube.com/@AItools4VETschools',
-    guideSr: 'https://github.com/blagojevicboban/moodle-filter_aisim/blob/master/docs/PRIRUCNIK_ZA_NASTAVNIKE.md',
-    guideEn: 'https://github.com/blagojevicboban/moodle-filter_aisim/blob/master/docs/TEACHER_GUIDE.md',
     source: 'https://github.com/AIForVet/aisimlab',
 };
 

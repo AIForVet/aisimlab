@@ -532,7 +532,7 @@ export const SIMS = [
         title: {
             en: 'Reinforcement Learning (Q-learning)',
             sr: 'Učenje potkrepljivanjem (Q-learning)',
-            sk: 'Posilňovanie učením (Q-learning)',
+            sk: 'Posilňované učenie (Q-learning)',
             pt: 'Aprendizagem por reforço (Q-learning)',
         },
         summary: {

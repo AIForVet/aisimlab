@@ -181,6 +181,31 @@ a { color: var(--brand); }
 .disclaimer { max-width: 52rem; margin: .75rem auto; }
 .links { margin: 0; }
 
+/* Teacher guide (guide.html). */
+.guide { max-width: 860px; }
+#guide-text { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem 2rem 2rem; overflow-wrap: break-word; }
+#guide-text h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); line-height: 1.2; margin: 0 0 .25rem; }
+#guide-text h1 + h2 { margin-top: 0; font-size: 1.1rem; font-weight: 500; color: var(--muted); }
+#guide-text h2 { margin: 2rem 0 .75rem; font-size: 1.45rem; color: var(--brand-dark); }
+#guide-text h3 { margin: 1.75rem 0 .5rem; font-size: 1.2rem; scroll-margin-top: 1rem; }
+#guide-text h4 { margin: 1.1rem 0 .3rem; font-size: 1rem; color: var(--brand); }
+#guide-text h2, #guide-text h3 { scroll-margin-top: 1rem; }
+#guide-text hr { border: 0; border-top: 1px solid var(--line); margin: 1.75rem 0; }
+#guide-text ul, #guide-text ol { padding-left: 1.4rem; }
+#guide-text li { margin: .2rem 0; }
+#guide-text li > ul, #guide-text li > ol { margin: .2rem 0; }
+#guide-text code { background: #eef2f6; padding: .05rem .3rem; border-radius: 4px; font-size: .88em; }
+#guide-text pre { overflow-x: auto; padding: .9rem; background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; font-size: .78rem; line-height: 1.35; }
+#guide-text pre code { background: none; padding: 0; font-size: inherit; }
+#guide-text blockquote { margin: .6rem 0; padding: .6rem 1rem; border-left: 4px solid var(--brand); background: #f1f8f9; border-radius: 0 10px 10px 0; }
+#guide-text blockquote p { margin: .3rem 0; }
+#guide-text .table { overflow-x: auto; margin: .75rem 0; }
+#guide-text table { border-collapse: collapse; min-width: 100%; font-size: .9rem; }
+#guide-text th, #guide-text td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+#guide-text th { background: #e7f3f4; }
+#guide-text tbody tr:nth-child(even) { background: #f8fafc; }
+#guide-text td:first-child { min-width: 9rem; }
+
 @media (max-width: 900px) {
     .lab-grid { grid-template-columns: 1fr; }
     #lab { padding-bottom: 6rem; }
@@ -233,6 +258,8 @@ a { color: var(--brand); }
     .lang a { min-width: 2.5rem; padding: 0 .3rem; }
     .hero { padding-top: 1rem; }
     .card { padding: 1rem; }
+    #guide-text { padding: 1rem .9rem 1.5rem; }
+    #guide-text table { font-size: .82rem; }
 }
 @media (prefers-reduced-motion: reduce) {
     .card, .toast { transition: none; }

@@ -1,5 +1,5 @@
 // Home page: the simulation cards.
-import {lang, t, tr} from './i18n.js';
+import {t, tr} from './i18n.js';
 import {LINKS, esc, progress, renderChrome} from './common.js';
 import {SIMS} from './catalog.js';
 
@@ -38,7 +38,7 @@ document.getElementById('home').innerHTML = `
             <a class="btn" href="${LINKS.filter}">${t('plugins')}: filter_aisim</a>
             <a class="btn" href="${LINKS.qtype}">qtype_aisim</a>
             <a class="btn" href="${LINKS.tiny}">tiny_aisim</a>
-            <a class="btn" href="${lang === 'sr' ? LINKS.guideSr : LINKS.guideEn}">📘 ${t('guide')}</a>
+            <a class="btn" href="guide.html">📘 ${t('guide')}</a>
         </p>
     </section>`;
 
