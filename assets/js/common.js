@@ -6,6 +6,7 @@ export const LINKS = {
     qtype: 'https://github.com/blagojevicboban/moodle-qtype_aisim',
     tiny: 'https://github.com/blagojevicboban/moodle-tiny_aisim',
     project: 'https://aiforvet.eu/',
+    demo: 'https://aisim.tsp.edu.rs/',
     youtube: 'https://www.youtube.com/@AItools4VETschools',
     source: 'https://github.com/AIForVet/aisimlab',
 };

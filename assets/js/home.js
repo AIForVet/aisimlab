@@ -35,6 +35,7 @@ document.getElementById('home').innerHTML = `
         <h2>${t('forTeachers')}</h2>
         <p>${t('forTeachersText')}</p>
         <p class="teacher-links">
+            <a class="btn" href="${LINKS.demo}" target="_blank">🎓 ${t('demoSite')}</a>
             <a class="btn" href="${LINKS.filter}">${t('plugins')}: filter_aisim</a>
             <a class="btn" href="${LINKS.qtype}">qtype_aisim</a>
             <a class="btn" href="${LINKS.tiny}">tiny_aisim</a>
