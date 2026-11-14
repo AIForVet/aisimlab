@@ -226,6 +226,82 @@ export const SIMS = [
         ],
     },
     {
+        id: 'logistic',
+        file: 'logistic.js',
+        cls: 'LogisticSim',
+        icon: '📉',
+        level: 2,
+        title: {
+            en: 'Logistic Regression',
+            sr: 'Logistička regresija',
+            sk: 'Logistická regresia',
+            pt: 'Regressão logística',
+        },
+        summary: {
+            en: 'How a model turns two measurements into a probability with the sigmoid, learns the weights with gradient descent and decides with a threshold.',
+            sr: 'Kako model od dva merenja pravi verovatnoću pomoću sigmoida, uči težine gradijentnim spustom i odlučuje pomoću praga.',
+            sk: 'Ako model z dvoch meraní urobí pravdepodobnosť pomocou sigmoidy, naučí sa váhy gradientným zostupom a rozhodne pomocou prahu.',
+            pt: 'Como um modelo transforma duas medições numa probabilidade com a sigmoide, aprende os pesos com a descida do gradiente e decide com um limiar.',
+        },
+        about: {
+            en: [
+                'Logistic regression is a classifier, despite its name. It computes a weighted sum z = w₁·x₁ + w₂·x₂ + b and squeezes it with the sigmoid σ(z) into a probability between 0 and 1.',
+                'The model predicts class 1 when σ(z) ≥ θ. All points where σ(z) = θ form a straight line – the decision boundary. The weights turn the line, the bias moves it.',
+                'Training is gradient descent on the log-loss, which punishes confident wrong answers hardest. The threshold is chosen afterwards: a low θ misses fewer cases (higher recall), a high θ gives fewer false alarms (higher precision).',
+            ],
+            sr: [
+                'Logistička regresija je, uprkos imenu, klasifikator. Računa otežanu sumu z = w₁·x₁ + w₂·x₂ + b i sigmoidom σ(z) je sabija u verovatnoću između 0 i 1.',
+                'Model predviđa klasu 1 kada je σ(z) ≥ θ. Sve tačke u kojima je σ(z) = θ čine pravu liniju – granicu odluke. Težine okreću liniju, pomeraj (bias) je pomera.',
+                'Trening je gradijentni spust po log-gubitku, koji najviše kažnjava sigurne pogrešne odgovore. Prag se bira posle: nizak θ propušta manje slučajeva (veći opoziv), visok θ daje manje lažnih uzbuna (veća preciznost).',
+            ],
+            sk: [
+                'Logistická regresia je napriek názvu klasifikátor. Vypočíta vážený súčet z = w₁·x₁ + w₂·x₂ + b a sigmoidou σ(z) ho stlačí na pravdepodobnosť medzi 0 a 1.',
+                'Model predpovedá triedu 1, keď σ(z) ≥ θ. Všetky body, kde σ(z) = θ, tvoria priamku – rozhodovaciu hranicu. Váhy priamku otáčajú, posun (bias) ju posúva.',
+                'Tréning je gradientný zostup po log-strate, ktorá najviac trestá isté nesprávne odpovede. Prah sa volí potom: nízky θ prehliadne menej prípadov (vyšší záchyt), vysoký θ dá menej falošných poplachov (vyššia presnosť).',
+            ],
+            pt: [
+                'Apesar do nome, a regressão logística é um classificador. Calcula uma soma ponderada z = w₁·x₁ + w₂·x₂ + b e comprime-a com a sigmoide σ(z) numa probabilidade entre 0 e 1.',
+                'O modelo prevê a classe 1 quando σ(z) ≥ θ. Todos os pontos onde σ(z) = θ formam uma linha reta – a fronteira de decisão. Os pesos rodam a linha, o viés (bias) desloca-a.',
+                'O treino é a descida do gradiente sobre a log-loss, que castiga mais as respostas erradas dadas com confiança. O limiar escolhe-se depois: um θ baixo deixa escapar menos casos (mais sensibilidade), um θ alto dá menos falsos alarmes (mais precisão).',
+            ],
+        },
+        options: {dataset: 'machine', w1: 0, w2: 0, b: 0, threshold: 0.5, lr: 0.5, epochs: 0},
+        state: (s) => ({dataset: s.datasetKey, w1: s.w1, w2: s.w2, b: s.b, threshold: s.threshold, lr: s.lr,
+            epochs: s.epoch}),
+        challenges: [
+            {
+                setup: {dataset: 'machine', w1: 0, w2: 0, b: 0, threshold: 0.5, lr: 0.5},
+                text: {
+                    en: 'Train the model (or set the weights by hand) until it recognises machine failures with an accuracy of at least 95%.',
+                    sr: 'Istrenirajte model (ili ručno podesite težine) tako da prepoznaje kvarove mašine sa tačnošću od bar 95%.',
+                    sk: 'Natrénujte model (alebo ručne nastavte váhy) tak, aby rozpoznával poruchy stroja so správnosťou aspoň 95 %.',
+                    pt: 'Treine o modelo (ou ajuste os pesos à mão) até reconhecer avarias da máquina com uma exatidão de pelo menos 95%.',
+                },
+                check: (p, m) => p.dataset === 'machine' && m.accuracy >= 0.95,
+            },
+            {
+                setup: {dataset: 'machine', w1: 6.6, w2: 7, b: -1.6, threshold: 0.5, lr: 0.5},
+                text: {
+                    en: 'A missed failure stops the whole line. Keep the weights and move only the threshold θ: catch every failure (recall 100%) with a precision of at least 85%.',
+                    sr: 'Propušten kvar zaustavlja celu liniju. Zadržite težine i pomerajte samo prag θ: uhvatite svaki kvar (opoziv 100%) uz preciznost od bar 85%.',
+                    sk: 'Prehliadnutá porucha zastaví celú linku. Ponechajte váhy a posúvajte len prah θ: zachyťte každú poruchu (záchyt 100 %) s presnosťou aspoň 85 %.',
+                    pt: 'Uma avaria que escapa para a linha inteira. Mantenha os pesos e mova só o limiar θ: apanhe todas as avarias (sensibilidade 100%) com uma precisão de pelo menos 85%.',
+                },
+                check: (p, m) => p.dataset === 'machine' && m.recall >= 1 && m.precision >= 0.85,
+            },
+            {
+                setup: {dataset: 'exam', w1: 0, w2: 0, b: 0, threshold: 0.5, lr: 0.5},
+                text: {
+                    en: 'The data overlap, so no line is perfect. Train the model, then choose θ so that a predicted pass is right at least 88% of the time (precision) while recall stays at least 60%.',
+                    sr: 'Podaci se preklapaju, pa nijedna linija nije savršena. Istrenirajte model, pa izaberite θ tako da predviđeno „položio“ bude tačno bar u 88% slučajeva (preciznost), a opoziv ostane bar 60%.',
+                    sk: 'Dáta sa prekrývajú, takže žiadna priamka nie je dokonalá. Natrénujte model a potom zvoľte θ tak, aby predpovedané „prospel“ bolo správne aspoň v 88 % prípadov (presnosť) a záchyt zostal aspoň 60 %.',
+                    pt: 'Os dados sobrepõem-se, por isso nenhuma linha é perfeita. Treine o modelo e depois escolha θ para que um “aprovado” previsto esteja certo em pelo menos 88% dos casos (precisão), mantendo a sensibilidade em pelo menos 60%.',
+                },
+                check: (p, m) => p.dataset === 'exam' && m.precision >= 0.88 && m.recall >= 0.6,
+            },
+        ],
+    },
+    {
         id: 'knn-tree',
         file: 'knn_tree.js',
         cls: 'KnnTreeSim',
