@@ -2,9 +2,9 @@
 import {LANGS, lang, t} from './i18n.js';
 
 export const LINKS = {
-    filter: 'https://github.com/blagojevicboban/moodle-filter_aisim',
-    qtype: 'https://github.com/blagojevicboban/moodle-qtype_aisim',
-    tiny: 'https://github.com/blagojevicboban/moodle-tiny_aisim',
+    filter: 'https://marketplace.moodle.com/plugins/filter_aisim',
+    qtype: 'https://marketplace.moodle.com/plugins/qtype_aisim',
+    tiny: 'https://marketplace.moodle.com/plugins/tiny_aisim',
     project: 'https://aiforvet.eu/',
     demo: 'https://aisim.tsp.edu.rs/',
     youtube: 'https://www.youtube.com/@AItools4VETschools',
