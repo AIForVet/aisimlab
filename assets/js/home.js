@@ -23,6 +23,13 @@ const cards = SIMS.map((sim) => {
 
 const solved = SIMS.reduce((n, s) => n + progress.count(s), 0);
 
+/** The three Moodle plugins, by their Marketplace listing names. */
+const PLUGINS = [
+    {key: 'filter', name: 'AI Simulations Viewer', text: 'pluginFilter'},
+    {key: 'tiny', name: 'AI Simulation button for TinyMCE', text: 'pluginTiny'},
+    {key: 'qtype', name: 'AI Simulation question type', text: 'pluginQtype'},
+];
+
 document.getElementById('home').innerHTML = `
     <section class="hero">
         <h1>AISim <span>Lab</span></h1>
@@ -34,11 +41,20 @@ document.getElementById('home').innerHTML = `
     <section class="teachers">
         <h2>${t('forTeachers')}</h2>
         <p>${t('forTeachersText')}</p>
+        <h3>${t('plugins')}</h3>
+        <div class="plugins">${PLUGINS.map((p) => `
+            <a class="plugin" href="${LINKS[p.key]}" target="_blank" rel="noopener">
+                <img src="assets/img/plugin-${p.key}.svg" width="56" height="56" alt="">
+                <span class="plugin-text">
+                    <strong>${p.name}</strong>
+                    <code>${p.key}_aisim</code>
+                    <span>${t(p.text)}</span>
+                    <span class="go">Moodle Marketplace →</span>
+                </span>
+            </a>`).join('')}
+        </div>
         <p class="teacher-links">
             <a class="btn" href="${LINKS.demo}" target="_blank">🎓 ${t('demoSite')}</a>
-            <a class="btn" href="${LINKS.filter}">${t('plugins')}: filter_aisim</a>
-            <a class="btn" href="${LINKS.qtype}">qtype_aisim</a>
-            <a class="btn" href="${LINKS.tiny}">tiny_aisim</a>
             <a class="btn" href="guide.html">📘 ${t('guide')}</a>
         </p>
     </section>`;
