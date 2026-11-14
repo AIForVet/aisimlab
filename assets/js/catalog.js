@@ -674,6 +674,81 @@ export const SIMS = [
         ],
     },
     {
+        id: 'rnn',
+        file: 'rnn.js',
+        cls: 'RnnSim',
+        icon: '🔄',
+        level: 3,
+        title: {
+            en: 'Recurrent Neural Network (RNN)',
+            sr: 'Rekurentna neuronska mreža (RNN)',
+            sk: 'Rekurentná neurónová sieť (RNN)',
+            pt: 'Rede neuronal recorrente (RNN)',
+        },
+        summary: {
+            en: 'A network with memory reads a sequence step by step. See how far back it remembers, why it forgets, and why training a long memory gets stuck.',
+            sr: 'Mreža sa memorijom čita niz korak po korak. Pogledajte koliko daleko unazad pamti, zašto zaboravlja i zašto treniranje duge memorije zapne.',
+            sk: 'Sieť s pamäťou číta postupnosť krok za krokom. Pozrite sa, ako ďaleko dozadu si pamätá, prečo zabúda a prečo sa trénovanie dlhej pamäte zasekne.',
+            pt: 'Uma rede com memória lê uma sequência passo a passo. Veja até onde se lembra, porque esquece e porque o treino de uma memória longa fica preso.',
+        },
+        about: {
+            en: [
+                'Sequences – hourly temperatures, words in a sentence, sensor readings – need a model that remembers what came before. A recurrent neural network keeps a state h and updates it at every step from the previous state and the new input: h_t = tanh(w·h_(t−1) + u·x_t). The output is y_t = v·h_t.',
+                'The same weights are used at every step, so the network can be drawn unrolled in time: one copy of the neuron per step, linked by the memory weight w. With w close to 0 the network forgets at once; with w close to 1 it keeps information for many steps.',
+                'Training (backpropagation through time) sends the error back through every step and multiplies it by w each time. Over a long sequence the gradient vanishes and training stops learning – the reason why LSTM and GRU networks, with gates that decide what to keep, were invented.',
+            ],
+            sr: [
+                'Nizovi – temperature po satima, reči u rečenici, merenja senzora – traže model koji pamti šta je bilo pre. Rekurentna neuronska mreža čuva stanje h i u svakom koraku ga menja iz prethodnog stanja i novog ulaza: h_t = tanh(w·h_(t−1) + u·x_t). Izlaz je y_t = v·h_t.',
+                'Iste težine koriste se u svakom koraku, pa se mreža može nacrtati razvijena kroz vreme: jedna kopija neurona po koraku, povezane težinom memorije w. Sa w blizu 0 mreža odmah zaboravlja; sa w blizu 1 čuva informaciju mnogo koraka.',
+                'Treniranje (propagacija unazad kroz vreme) šalje grešku nazad kroz svaki korak i svaki put je množi sa w. Kroz dug niz gradijent nestane i treniranje prestane da uči – zato su izmišljene mreže LSTM i GRU, sa kapijama koje odlučuju šta da se zadrži.',
+            ],
+            sk: [
+                'Postupnosti – hodinové teploty, slová vo vete, merania senzora – potrebujú model, ktorý si pamätá, čo bolo predtým. Rekurentná neurónová sieť uchováva stav h a v každom kroku ho mení z predchádzajúceho stavu a nového vstupu: h_t = tanh(w·h_(t−1) + u·x_t). Výstup je y_t = v·h_t.',
+                'V každom kroku sa používajú rovnaké váhy, takže sieť sa dá nakresliť rozvinutá v čase: jedna kópia neurónu na krok, prepojené váhou pamäte w. Pri w blízko 0 sieť hneď zabúda; pri w blízko 1 uchová informáciu mnoho krokov.',
+                'Trénovanie (spätné šírenie v čase) posiela chybu späť cez každý krok a zakaždým ju násobí w. Pri dlhej postupnosti gradient zmizne a trénovanie sa prestane učiť – preto vznikli siete LSTM a GRU s bránami, ktoré rozhodujú, čo si ponechať.',
+            ],
+            pt: [
+                'As sequências – temperaturas por hora, palavras numa frase, leituras de sensores – precisam de um modelo que se lembre do que veio antes. Uma rede neuronal recorrente guarda um estado h e atualiza-o em cada passo a partir do estado anterior e da nova entrada: h_t = tanh(w·h_(t−1) + u·x_t). A saída é y_t = v·h_t.',
+                'Os mesmos pesos são usados em cada passo, por isso a rede pode ser desenhada desdobrada no tempo: uma cópia do neurónio por passo, ligadas pelo peso da memória w. Com w perto de 0 a rede esquece logo; com w perto de 1 guarda a informação durante muitos passos.',
+                'O treino (retropropagação no tempo) envia o erro para trás por cada passo e multiplica-o por w de cada vez. Numa sequência longa o gradiente desaparece e o treino deixa de aprender – foi por isso que se inventaram as redes LSTM e GRU, com portas que decidem o que guardar.',
+            ],
+        },
+        options: {dataset: 'temperature', length: 10, w: 0.5, u: 1, v: 1},
+        state: (s) => ({dataset: s.datasetKey, length: s.length, w: s.p.w, u: s.p.u, v: s.p.v}),
+        challenges: [
+            {
+                setup: {dataset: 'temperature', w: 0.5, u: 1, v: 1},
+                text: {
+                    en: 'The thermometer is noisy. Train the network or set the weights so that its forecast of the real temperature has a loss (MSE) of at most 0.065. What does the memory weight w do here?',
+                    sr: 'Termometar ima šum. Istrenirajte mrežu ili podesite težine tako da njena prognoza stvarne temperature ima grešku (MSE) od najviše 0.065. Šta ovde radi težina memorije w?',
+                    sk: 'Teplomer je zašumený. Natrénujte sieť alebo nastavte váhy tak, aby jej predpoveď skutočnej teploty mala chybu (MSE) najviac 0,065. Čo tu robí váha pamäte w?',
+                    pt: 'O termómetro tem ruído. Treine a rede ou ajuste os pesos para que a previsão da temperatura real tenha um erro (MSE) de no máximo 0,065. O que faz aqui o peso da memória w?',
+                },
+                check: (p, m) => p.dataset === 'temperature' && m.loss <= 0.065,
+            },
+            {
+                setup: {dataset: 'memory', length: 10, w: 0.5, u: 1, v: 1},
+                text: {
+                    en: 'Remember the first value of a 10-step sequence: reach a loss of at most 0.02 while the network remembers at least 10 inputs.',
+                    sr: 'Zapamtite prvu vrednost niza od 10 koraka: dostignite grešku od najviše 0.02, a da mreža pamti bar 10 ulaza.',
+                    sk: 'Zapamätajte si prvú hodnotu postupnosti s 10 krokmi: dosiahnite chybu najviac 0,02, pričom si sieť pamätá aspoň 10 vstupov.',
+                    pt: 'Lembre o primeiro valor de uma sequência de 10 passos: atinja um erro de no máximo 0,02 com a rede a lembrar-se de pelo menos 10 entradas.',
+                },
+                check: (p, m) => p.dataset === 'memory' && m.loss <= 0.02 && m.remembered >= 10,
+            },
+            {
+                setup: {dataset: 'memory', length: 20, w: 0.5, u: 1, v: 1},
+                text: {
+                    en: 'Now the sequence has 20 steps. Press Train a few times and watch the gradient size: why does training not help? Then set the network by hand to a loss of at most 0.01 with at least 20 remembered inputs.',
+                    sr: 'Sada niz ima 20 koraka. Pritisnite Treniraj nekoliko puta i pratite veličinu gradijenta: zašto treniranje ne pomaže? Zatim ručno podesite mrežu na grešku od najviše 0.01 uz bar 20 zapamćenih ulaza.',
+                    sk: 'Teraz má postupnosť 20 krokov. Niekoľkokrát stlačte Trénovať a sledujte veľkosť gradientu: prečo trénovanie nepomáha? Potom ručne nastavte sieť na chybu najviac 0,01 s aspoň 20 zapamätanými vstupmi.',
+                    pt: 'Agora a sequência tem 20 passos. Carregue em Treinar algumas vezes e observe o tamanho do gradiente: porque é que o treino não ajuda? Depois ajuste a rede à mão para um erro de no máximo 0,01 com pelo menos 20 entradas lembradas.',
+                },
+                check: (p, m) => p.dataset === 'memory' && m.loss <= 0.01 && m.remembered >= 20,
+            },
+        ],
+    },
+    {
         id: 'convolution',
         file: 'convolution.js',
         cls: 'ConvolutionSim',
