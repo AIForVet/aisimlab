@@ -378,6 +378,81 @@ export const SIMS = [
         ],
     },
     {
+        id: 'cross-validation',
+        file: 'cross_validation.js',
+        cls: 'CrossValidationSim',
+        icon: '🔁',
+        level: 2,
+        title: {
+            en: 'Cross-Validation',
+            sr: 'Unakrsna validacija',
+            sk: 'Krížová validácia',
+            pt: 'Validação cruzada',
+        },
+        summary: {
+            en: 'How to choose a hyperparameter honestly: k folds, the mean validation error and a test set that stays locked until the end.',
+            sr: 'Kako pošteno izabrati hiperparametar: k delova, prosečna validaciona greška i test skup koji ostaje zaključan do kraja.',
+            sk: 'Ako poctivo zvoliť hyperparameter: k častí, priemerná validačná chyba a testovacia množina, ktorá zostane zamknutá až do konca.',
+            pt: 'Como escolher um hiperparâmetro de forma honesta: k partes, o erro médio de validação e um conjunto de teste que fica bloqueado até ao fim.',
+        },
+        about: {
+            en: [
+                'Some settings of a model are not learned from the data – here the degree of the polynomial. They are hyperparameters, and choosing them by the training error always leads to the most complex model, because the training error only falls.',
+                'Cross-validation splits the training data into k folds. Each fold is held out once, the model is trained on the others and measured on it. The mean of these k errors estimates how the model works on new data, and the spread shows how reliable that estimate is.',
+                'The degree with the lowest mean validation error wins. Only then is the test set unlocked – once. If you keep tuning after seeing the test result, the test turns into another validation set and stops being an honest measure.',
+            ],
+            sr: [
+                'Neka podešavanja modela se ne uče iz podataka – ovde stepen polinoma. To su hiperparametri, a izbor po grešci na treningu uvek vodi ka najsloženijem modelu, jer greška na treningu samo opada.',
+                'Unakrsna validacija deli podatke za trening na k delova. Svaki deo se jednom izdvoji, model se trenira na ostalima i meri na njemu. Prosek tih k grešaka procenjuje kako model radi na novim podacima, a rasipanje pokazuje koliko je ta procena pouzdana.',
+                'Pobeđuje stepen sa najmanjom prosečnom validacionom greškom. Tek tada se otključava test skup – jednom. Ako nastavite da podešavate posle rezultata testa, test postaje još jedan validacioni skup i prestaje da bude pošteno merilo.',
+            ],
+            sk: [
+                'Niektoré nastavenia modelu sa z dát neučia – tu stupeň polynómu. Sú to hyperparametre a ich voľba podľa chyby na tréningu vždy vedie k najzložitejšiemu modelu, lebo chyba na tréningu len klesá.',
+                'Krížová validácia rozdelí trénovacie dáta na k častí. Každá časť sa raz odloží, model sa natrénuje na ostatných a zmeria sa na nej. Priemer týchto k chýb odhaduje, ako model funguje na nových dátach, a rozptyl ukazuje, aký spoľahlivý je tento odhad.',
+                'Vyhráva stupeň s najmenšou priemernou validačnou chybou. Až potom sa odomkne testovacia množina – raz. Ak po výsledku testu pokračujete v ladení, test sa stane ďalšou validačnou množinou a prestane byť poctivým meradlom.',
+            ],
+            pt: [
+                'Algumas definições de um modelo não são aprendidas com os dados – aqui o grau do polinómio. São hiperparâmetros, e escolhê-los pelo erro de treino leva sempre ao modelo mais complexo, porque o erro de treino só desce.',
+                'A validação cruzada divide os dados de treino em k partes. Cada parte fica de fora uma vez, o modelo é treinado com as outras e avaliado nela. A média destes k erros estima como o modelo funciona com dados novos, e a dispersão mostra quão fiável é essa estimativa.',
+                'Ganha o grau com o menor erro médio de validação. Só então se desbloqueia o conjunto de teste – uma vez. Se continuar a afinar depois de ver o resultado do teste, o teste passa a ser mais um conjunto de validação e deixa de ser uma medida honesta.',
+            ],
+        },
+        options: {dataset: 'sine', k: 5, degree: 1, seed: 1, tested: 0},
+        state: (s) => ({dataset: s.datasetKey, k: s.k, degree: s.degree, seed: s.seed, tested: s.tested ? 1 : 0}),
+        challenges: [
+            {
+                setup: {dataset: 'sine', k: 5, degree: 1, seed: 1, tested: 0},
+                text: {
+                    en: 'The training error keeps falling as the degree grows. With at least 5 folds, find the degree with the lowest cross-validation error (★).',
+                    sr: 'Greška na treningu stalno opada kako stepen raste. Sa najmanje 5 delova pronađite stepen sa najmanjom greškom unakrsne validacije (★).',
+                    sk: 'Chyba na tréningu so stupňom stále klesá. S aspoň 5 časťami nájdite stupeň s najmenšou chybou krížovej validácie (★).',
+                    pt: 'O erro de treino continua a descer à medida que o grau aumenta. Com pelo menos 5 partes, encontre o grau com o menor erro de validação cruzada (★).',
+                },
+                check: (p, m) => p.dataset === 'sine' && p.k >= 5 && p.degree === m.bestDegree,
+            },
+            {
+                setup: {dataset: 'noisy', k: 2, degree: 3, seed: 1, tested: 0},
+                text: {
+                    en: 'Very noisy data: press 🎲 New split a few times and watch the best degree jump with 2 folds. Then use at least 10 folds and reach a cross-validation MSE of at most 0.80.',
+                    sr: 'Podaci sa mnogo šuma: pritisnite nekoliko puta 🎲 Nova podela i posmatrajte kako najbolji stepen skače sa 2 dela. Zatim uzmite najmanje 10 delova i postignite CV MSE od najviše 0,80.',
+                    sk: 'Veľmi zašumené dáta: niekoľkokrát stlačte 🎲 Nové rozdelenie a sledujte, ako najlepší stupeň pri 2 častiach skáče. Potom použite aspoň 10 častí a dosiahnite CV MSE najviac 0,80.',
+                    pt: 'Dados muito ruidosos: carregue algumas vezes em 🎲 Nova divisão e veja o melhor grau saltar com 2 partes. Depois use pelo menos 10 partes e atinja um MSE de CV de no máximo 0,80.',
+                },
+                check: (p, m) => p.dataset === 'noisy' && p.k >= 10 && m.cvMse <= 0.8,
+            },
+            {
+                setup: {dataset: 'sensor', k: 5, degree: 9, seed: 1, tested: 0},
+                text: {
+                    en: 'Choose the degree by cross-validation (the ★ degree), and only then press 🔒 Final test. The test MSE must be at most 0.10.',
+                    sr: 'Izaberite stepen unakrsnom validacijom (stepen sa ★), pa tek onda pritisnite 🔒 Završni test. MSE na testu mora biti najviše 0,10.',
+                    sk: 'Zvoľte stupeň krížovou validáciou (stupeň s ★) a až potom stlačte 🔒 Záverečný test. MSE na teste musí byť najviac 0,10.',
+                    pt: 'Escolha o grau pela validação cruzada (o grau com ★) e só depois carregue em 🔒 Teste final. O MSE de teste tem de ser no máximo 0,10.',
+                },
+                check: (p, m) => p.dataset === 'sensor' && p.tested && p.degree === m.bestDegree && m.testMse !== null && m.testMse <= 0.1,
+            },
+        ],
+    },
+    {
         id: 'kmeans',
         file: 'kmeans.js',
         cls: 'KMeansSim',
