@@ -9,7 +9,7 @@ A static site: plain HTML, CSS and JavaScript modules. No build step, no server 
 
 | Path | What |
 |---|---|
-| `index.html` | Home page with the eleven simulations |
+| `index.html` | Home page with the twelve simulations |
 | `lab.html?sim=<id>` | One simulation with challenges, explanation, share link and Moodle embed code |
 | `guide.html` | Teacher guide in the four languages (`#kmeans`, `#q_learning` … jump to a simulation's section) |
 | `assets/js/catalog.js` | Simulations, URL options, explanations and challenges |

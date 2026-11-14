@@ -76,6 +76,81 @@ export const SIMS = [
         ],
     },
     {
+        id: 'data-prep',
+        file: 'data_prep.js',
+        cls: 'DataPrepSim',
+        icon: '🧹',
+        level: 1,
+        title: {
+            en: 'Data Preparation (EDA)',
+            sr: 'Priprema podataka (EDA)',
+            sk: 'Príprava dát (EDA)',
+            pt: 'Preparação de dados (EDA)',
+        },
+        summary: {
+            en: 'Look at the data before training: missing values, a unit mistake and variables on different scales – and what each of them does to a k-NN model.',
+            sr: 'Pogledajte podatke pre treninga: nedostajuće vrednosti, grešku u jedinicama i promenljive na različitim skalama – i šta svaka od njih radi k-NN modelu.',
+            sk: 'Pozrite si dáta pred tréningom: chýbajúce hodnoty, chybu v jednotkách a premenné v rôznych mierkach – a čo každá z nich spraví modelu k-NN.',
+            pt: 'Veja os dados antes do treino: valores em falta, um erro de unidades e variáveis em escalas diferentes – e o que cada um faz a um modelo k-NN.',
+        },
+        about: {
+            en: [
+                'Real data is never clean. Before any model is trained, exploratory data analysis (EDA) looks at the minimum, maximum, mean and median of every variable and at their distributions – this is where missing values and impossible readings show up.',
+                'Missing values can be dropped or replaced. Replacing them with 0 invents measurements; the mean or the median of the training data is a more honest estimate. Outliers caused by mistakes (here a reading in the wrong unit) should be found and removed.',
+                'Models that measure distances, such as k-NN, also need scaling: without it the variable with the largest numbers decides almost alone. Every step is learned on the training data and then applied, unchanged, to every new example.',
+            ],
+            sr: [
+                'Pravi podaci nikad nisu čisti. Pre treninga bilo kog modela, istraživačka analiza podataka (EDA) gleda minimum, maksimum, prosek i medijanu svake promenljive i njihove raspodele – tu se vide nedostajuće vrednosti i nemoguća merenja.',
+                'Nedostajuće vrednosti mogu se izbaciti ili zameniti. Zamena nulom izmišlja merenja; prosek ili medijana podataka za trening su poštenija procena. Autlajere nastale greškom (ovde merenje u pogrešnoj jedinici) treba pronaći i ukloniti.',
+                'Modelima koji mere rastojanja, kao što je k-NN, potrebno je i skaliranje: bez njega promenljiva sa najvećim brojevima odlučuje skoro sama. Svaki korak se uči na podacima za trening, a zatim se, nepromenjen, primenjuje na svaki novi primer.',
+            ],
+            sk: [
+                'Skutočné dáta nikdy nie sú čisté. Pred tréningom akéhokoľvek modelu sa prieskumná analýza dát (EDA) pozrie na minimum, maximum, priemer a medián každej premennej a na ich rozdelenia – tu sa ukážu chýbajúce hodnoty a nemožné merania.',
+                'Chýbajúce hodnoty sa dajú vyhodiť alebo nahradiť. Nahradenie nulou vymýšľa merania; priemer alebo medián trénovacích dát je poctivejší odhad. Odľahlé hodnoty spôsobené chybou (tu meranie v nesprávnej jednotke) treba nájsť a odstrániť.',
+                'Modely, ktoré merajú vzdialenosti, napríklad k-NN, potrebujú aj škálovanie: bez neho rozhoduje takmer sama premenná s najväčšími číslami. Každý krok sa naučí na trénovacích dátach a potom sa nezmenený použije na každý nový príklad.',
+            ],
+            pt: [
+                'Os dados reais nunca estão limpos. Antes de treinar qualquer modelo, a análise exploratória de dados (EDA) olha para o mínimo, o máximo, a média e a mediana de cada variável e para as suas distribuições – é aí que aparecem valores em falta e leituras impossíveis.',
+                'Os valores em falta podem ser eliminados ou substituídos. Substituí-los por 0 inventa medições; a média ou a mediana dos dados de treino são uma estimativa mais honesta. Os valores atípicos causados por erros (aqui uma leitura na unidade errada) devem ser encontrados e removidos.',
+                'Os modelos que medem distâncias, como o k-NN, também precisam de escalonamento: sem ele, a variável com os números maiores decide quase sozinha. Cada passo é aprendido nos dados de treino e depois aplicado, sem alterações, a cada novo exemplo.',
+            ],
+        },
+        options: {dataset: 'machine', missing: 'zero', outliers: 'keep', scaling: 'none', k: 5},
+        state: (s) => ({dataset: s.datasetKey, missing: s.missing, outliers: s.outliers, scaling: s.scaling, k: s.k}),
+        challenges: [
+            {
+                setup: {dataset: 'machine', missing: 'zero', outliers: 'keep', scaling: 'none', k: 5},
+                text: {
+                    en: 'The model guesses almost at random (about 50%). Look at the view of what k-NN sees and prepare the data so that the accuracy on the test data reaches at least 85%.',
+                    sr: 'Model pogađa skoro nasumično (oko 50%). Pogledajte prikaz onoga što vidi k-NN i pripremite podatke tako da tačnost na test podacima dostigne bar 85%.',
+                    sk: 'Model háda takmer náhodne (asi 50 %). Pozrite si zobrazenie toho, čo vidí k-NN, a pripravte dáta tak, aby správnosť na testovacích dátach dosiahla aspoň 85 %.',
+                    pt: 'O modelo acerta quase ao acaso (cerca de 50%). Veja a vista do que o k-NN vê e prepare os dados para que a exatidão nos dados de teste chegue a pelo menos 85%.',
+                },
+                check: (p, m) => p.dataset === 'machine' && m.accuracy >= 0.85,
+            },
+            {
+                setup: {dataset: 'machine', missing: 'zero', outliers: 'keep', scaling: 'minmax', k: 5},
+                text: {
+                    en: 'With min-max scaling the result is lower than it could be. Check the maximum speed in the table, find the problem and reach at least 92% – still with min-max scaling.',
+                    sr: 'Sa min-max skaliranjem rezultat je slabiji nego što bi mogao. Proverite maksimalnu brzinu u tabeli, pronađite problem i dostignite bar 92% – i dalje sa min-max skaliranjem.',
+                    sk: 'So škálovaním min-max je výsledok slabší, než by mohol byť. Skontrolujte maximálne otáčky v tabuľke, nájdite problém a dosiahnite aspoň 92 % – stále so škálovaním min-max.',
+                    pt: 'Com o escalonamento min-max o resultado é pior do que podia ser. Verifique a velocidade máxima na tabela, encontre o problema e atinja pelo menos 92% – ainda com escalonamento min-max.',
+                },
+                check: (p, m) => p.dataset === 'machine' && p.scaling === 'minmax' && m.accuracy >= 0.92,
+            },
+            {
+                setup: {dataset: 'patients', missing: 'zero', outliers: 'keep', scaling: 'none', k: 5},
+                text: {
+                    en: 'Patients: do not invent zeros for the missing blood values. Build a pipeline with an accuracy of at least 90% and a recall of at least 85%.',
+                    sr: 'Pacijenti: ne izmišljajte nule za nedostajuće vrednosti markera. Napravite tok pripreme sa tačnošću od bar 90% i opozivom od bar 85%.',
+                    sk: 'Pacienti: nevymýšľajte nuly za chýbajúce hodnoty markera. Zostavte postup prípravy so správnosťou aspoň 90 % a záchytom aspoň 85 %.',
+                    pt: 'Doentes: não invente zeros para os valores do marcador em falta. Construa uma preparação com exatidão de pelo menos 90% e sensibilidade de pelo menos 85%.',
+                },
+                check: (p, m) => p.dataset === 'patients' && p.missing !== 'zero' && m.accuracy >= 0.9 && m.recall >= 0.85,
+            },
+        ],
+    },
+    {
         id: 'confusion-matrix',
         file: 'confusion_matrix.js',
         cls: 'ConfusionMatrixSim',
